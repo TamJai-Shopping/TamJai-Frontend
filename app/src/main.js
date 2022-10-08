@@ -15,9 +15,9 @@ const axiosInstance = axios.create({
     baseURL: 'http://localhost/api',
 })
 
-app.config.globalProperties.$axios = { ...axiosInstance }
 
+app.config.globalProperties.$axios = { ...axiosInstance }
 app.use(createPinia())
 app.use(router)
-
 app.mount('#app')
+

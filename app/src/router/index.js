@@ -1,14 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Marketplace from '../views/marketPlace/Marketplace.vue'
 import CoinDeskView from '@/views/CoinDeskView.vue'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: Marketplace
     },
     {
       path: '/about',
@@ -24,19 +23,19 @@ const router = createRouter({
       component: CoinDeskView
     },
     {
-      path: '/rewards',
+      path: '/reward',
       name: 'rewards',
-      component: () => import('../views/rewards/AllRewardView.vue')
+      component: () => import('../views/reward/AllRewardView.vue')
     },
     {
-      path: '/rewards/:id',
-      name: 'rewards.show',
-      component: () => import('../views/rewards/ShowView.vue')
+      path: '/reward/:id',
+      name: 'reward.show',
+      component: () => import('../views/reward/ShowView.vue')
     },
     {
-      path: '/rewards/create',
-      name: 'rewards.create',
-      component: () => import('../views/rewards/CreateView.vue')
+      path: '/reward/create',
+      name: 'reward.create',
+      component: () => import('../views/reward/CreateView.vue')
     }
   ]
 })
