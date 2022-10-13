@@ -13,9 +13,9 @@
                       d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
             </div>
-            <input name="search" type="search" id="default-search"
+            <input name="search" type="search" id="default-search" v-model="searchQuery"
                    class="block p-3 pl-12 w-full text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-[#B3BA1E] focus:border-blue-500"
-                   placeholder="ค้นหาสินค้า" required>
+                   placeholder="ค้นหาสินค้า" required />
             <button type="submit"
                     class="text-white absolute right-2.5 bottom-1.5  bg-[#B3BA1E] hover:bg-[#aeb347] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-1.5 py-1.5">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -49,7 +49,32 @@
 
 <script>
 export default {
-  name: "Navbar"
+  data() {
+    return {
+      searchQuery: null,
+      resources:[
+        {title:"ABE Attendance",uri:"aaaa.com",category:"a",icon:null},
+        {title:"Accounting Services",uri:"aaaa.com",category:"a",icon:null},
+        {title:"Administration",uri:"aaaa.com",category:"a",icon:null},
+        {title:"Advanced Student Lookup",uri:"bbbb.com",category:"b",icon:null},
+        {title:"Art & Sciences",uri:"bbbb.com",category:"b",icon:null},
+        {title:"Auxiliares Services",uri:"bbbb.com",category:"b",icon:null},
+        {title:"Basic Skills",uri:"cccc.com",category:"c",icon:null},
+        {title:"Board of Trustees",uri:"dddd.com",category:"d",icon:null}
+      ]
+    };
+  },
+  computed: {
+    resultQuery (){
+      if(this.searchQuery){
+        return this.resources.filter((item)=>{
+          return item.title.startsWith(this.searchQuery);
+        })
+      }else{
+        return this.resources;
+      }
+    }
+  },
 }
 </script>
 
