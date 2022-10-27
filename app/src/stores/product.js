@@ -8,21 +8,34 @@ export const useProductStore = defineStore({
         products: []
     }
   },
-  getters: {
-    getProducts: (state) => state.products,
 
-    sortByPoint (state) {
+  getters: {
+    getProducts (state) {
+      return state.products
+    },
+    sortByMinPriceToMaxPrice (state) {
       const sortable = [...state.products]
       return sortable.sort((a, b) => {
-        return a.point - b.point
+        return a.price - b.price
       })
     },
-
-    sortByName (state) {
-      const sortable = [...state.products]
-      return sortable.sort((a, b) => {
-        return (a.name).localeCompare(b.name)
-      })
+	  sortByMaxPriceToMinPrice (state) {
+        const sortable = [...state.products]
+        return sortable.sort((a, b) => {
+          return b.price - a.price
+        })
+    },
+    sortByLatest (state) {
+        const sortable = [...state.products]
+        return sortable.sort((a, b) => {
+            return b.id - a.id
+        })
+    },
+    sortByBestSeller (state) {
+        const sortable = [...state.products]
+        return sortable.sort((a, b) => {
+            return b.sell_amount - a.sell_amount
+        })
     }
   }, 
 
