@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Marketplace from '../views/Marketplace.vue'
+import Marketplace from '../views/products/Marketplace.vue'
 import CoinDeskView from '@/views/CoinDeskView.vue'
 
 const router = createRouter({
@@ -11,33 +11,10 @@ const router = createRouter({
       component: Marketplace
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      path: '/products/:id',
+      name: 'products.show',
+      component: () => import('@/views/products/ProductShowView.vue')
     },
-    {
-      path: '/coin-desk',
-      name: 'coin-desk',
-      component: CoinDeskView
-    },
-    {
-      path: '/rewards',
-      name: 'rewards',
-      component: () => import('../views/rewards/AllRewardView.vue')
-    },
-    {
-      path: '/rewards/:id',
-      name: 'rewards.show',
-      component: () => import('../views/rewards/ShowView.vue')
-    },
-    {
-      path: '/rewards/create',
-      name: 'rewards.create',
-      component: () => import('../views/rewards/CreateView.vue')
-    }
   ]
 })
 
