@@ -9,7 +9,7 @@
       <div>
       <select v-model="selected" class="w-36 rounded-lg bg-gray-100 border-gray-300 my-3" >
         <option disabled value="">เลือกหมวดหมู่</option>
-        <option value="profile">โปรไฟล์</option>
+        <option value="profile">ผักผลไ</option>
         <option value="setting">การตั้งค่า</option>
         <option value="logOut">ออกจากระบบ</option>
       </select>
@@ -57,7 +57,7 @@
 
 <script>
 export default {
-  name: "Filter"
+  name:'filter'
 }
 </script>
 
