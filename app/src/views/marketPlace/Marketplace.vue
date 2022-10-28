@@ -1,10 +1,6 @@
-<script setup>
-  import SideBar from '@/components/SideBar.vue';
-</script>
-    
 <template >
   <div class="inline-flex">
-    <SideBar/>
+    <SideBar />
     <div class="font-mono mx-auto max-w-7xl text-gray-700">
       <h1 class="pl-8 pt-6 text-xl">หมวดหมู่สินค้า</h1>
       <div class="p-7 pt-4 flex flex-wrap justify-between">
@@ -115,9 +111,20 @@
         </a>
       </div>
     </div>
+    <router-link to="/marketPlace/report" tag="button">
+      foo
+    </router-link>
   </div>
-
 </template>
+
+<script>
+import SideBar from '@/components/SideBar.vue'
+export default {
+  components: {
+    SideBar
+  }
+}
+</script>
 
 <style scoped>
 

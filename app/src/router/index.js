@@ -36,6 +36,11 @@ const router = createRouter({
       path: '/reward/create',
       name: 'reward.create',
       component: () => import('../views/reward/CreateView.vue')
+    },
+    {
+      path: '/marketPlace/report',
+      name: 'marketPlace.report',
+      component:()=>import('../views/marketPlace/ReportView.vue')
     }
   ]
 })

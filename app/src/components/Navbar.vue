@@ -15,7 +15,7 @@
             </div>
             <input name="search" type="search" id="default-search" v-model="searchQuery"
                    class="block p-3 pl-12 w-full text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-[#B3BA1E] focus:border-blue-500"
-                   placeholder="ค้นหาสินค้า" required /> {{ getAllItems() }}
+                   placeholder="ค้นหาสินค้า" required />
             <button type="submit"
                     class="text-white absolute right-2.5 bottom-1.5  bg-[#B3BA1E] hover:bg-[#aeb347] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-1.5 py-1.5">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
