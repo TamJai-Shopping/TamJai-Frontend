@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import RewardCard from '@/components/rewards/RewardCard.vue'
+import RewardCard from '@/components/reward/RewardCard.vue'
 // Reactivity
 export default {
     data() {
@@ -31,9 +31,9 @@ export default {
     }, methods: {
         // Methods
         selectReward(reward) {
-            // this.$router.push(`/rewards/${reward.id}`)
+            // this.$router.push(`/reward/${reward.id}`)
             this.$router.push({
-                name: 'rewards.show',
+                name: 'reward.show',
                 params: { id: reward.id } 
             })
             if (this.selected.id === reward.id) {
@@ -48,7 +48,7 @@ export default {
         // Lifecycle
         console.log("mounted")
         // const response = axios.get(url).then(responseData => {
-        //     this.rewards = responseData.data.data
+        //     this.reward = responseData.data.data
         // })
         // promise
 

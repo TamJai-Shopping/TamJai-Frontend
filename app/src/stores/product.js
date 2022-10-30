@@ -36,7 +36,7 @@ export const useProductStore = defineStore({
         return sortable.sort((a, b) => {
             return b.sell_amount - a.sell_amount
         })
-    }
+    },
   }, 
 
   actions: {

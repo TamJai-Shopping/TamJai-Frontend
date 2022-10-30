@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Marketplace from '../views/products/Marketplace.vue'
-import CoinDeskView from '@/views/CoinDeskView.vue'
-
+import Search from '@/views/products/SearchItemView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -15,6 +14,13 @@ const router = createRouter({
       name: 'products.show',
       component: () => import('@/views/products/ProductShowView.vue')
     },
+    {
+      path: '/products/search',
+      name: 'products.search',
+      component:Search,
+      props:route =>({ query: route.query.q })
+
+    }
   ]
 })
 
