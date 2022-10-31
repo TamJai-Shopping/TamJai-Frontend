@@ -1,6 +1,6 @@
 <template>
   <div class="font-mono mx-auto max-w-7xl text-gray-700">
-    <SideBar />
+    <SideBar/>
     <div class="inline-block flex-auto grid-cols-2">
       <div class="pl-8 flex">
         <h1 class="pt-1.5 text-xl">สินค้าทั้งหมด</h1>
@@ -14,7 +14,7 @@
           </select>
         </div>
       </div>
-      <div v-if="products == null" role="status">
+      <div v-if="loading" role="status">
         <svg aria-hidden="true" class="mx-auto w-24 h-24 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
              fill="none" viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -30,10 +30,10 @@
         <div v-if="error != null">
           {{ error }}
         </div>
-        <product-card v-for="product in products"
+        <product-card v-for="product in productView"
                       :key="product.id"
                       :product="product"
-                      :url="`products/${product.id}`">
+                      :url="`/products/${product.id}`">
         </product-card>
       </div>
     </div>
@@ -45,6 +45,9 @@ import ProductCard from '@/components/products/ProductCard.vue'
 import {useProductStore} from '@/stores/product.js'
 import axios from "axios";
 import SideBar from "@/components/SideBar.vue"
+import {storeToRefs} from "pinia";
+import {computed} from "vue";
+
 export default {
   setup() {
     const product_store = useProductStore()
@@ -53,48 +56,51 @@ export default {
 
   data() {
     return {
-      products: null,
-      keywords:null,
+
+
       error: null,
-      sortOption: 'default'
+      sortOption: 'default',
+      loading: true
     }
   },
 
   watch: {
-    sortOption(newOption, oldOption) {
-      switch (newOption) {
-        case 'minPrice':
-          this.products = this.product_store.sortByMinPriceToMaxPrice
-          break;
-        case 'maxPrice':
-          this.products = this.product_store.sortByMaxPriceToMinPrice
-          break
-        case 'bestSeller':
-          this.products = this.product_store.sortByBestSeller
-          break
-        default:
-          this.products = this.product_store.query
-
-          break;
-      }
-    },
-  },
-
-  async mounted() {
-
-    try {
-      // await this.product_store.fetch()
-      this.keywords = await this.product_store.searchProduct()
-      this.product_store.products = this.keywords
-
-      this.products = this.product_store.sortByLatest
-
-    } catch (error) {
-      this.error = error.message
+    async '$route.query.q'() {
+      await this.searchProduct()
     }
   },
-  methods: {
+  computed: {
+    productView() {
+      const mapToGetters = {
+        minPrice: this.product_store.sortByMinPriceToMaxPrice,
+        maxPrice: this.product_store.sortByMaxPriceToMinPrice,
+        bestSeller: this.product_store.sortByBestSeller
+      }
+      return mapToGetters[this.sortOption] || this.product_store.products
+    }
 
+  },
+
+
+  async mounted() {
+    await this.searchProduct()
+
+  },
+  methods: {
+    async searchProduct() {
+      try {
+        // await this.product_store.fetch()
+        this.loading = true
+        await this.product_store.searchProduct(this.$route.query.q)
+
+        this.loading = false
+
+        // console.log(this.products)
+      } catch (error) {
+        this.loading = false
+        this.error = error.message
+      }
+    }
   },
   components: {
     ProductCard,

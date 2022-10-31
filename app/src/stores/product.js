@@ -61,11 +61,10 @@ export const useProductStore = defineStore({
         delete(id) {
             this.products = this.products.filter((product) => product.id != id)
         },
-        async searchProduct(){
-            this.query = await productAPI.getSearch(this.key)
-            return this.query
+        async searchProduct(key) {
+            this.products = await productAPI.getSearch(key)
 
-        },
+        }
 
     },
 

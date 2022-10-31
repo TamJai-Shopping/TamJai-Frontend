@@ -83,10 +83,13 @@ export default {
   //
   // },
   methods: {
-     searchProduct() {
+     async searchProduct() {
        // this.productFilter = this.product_store.searchProduct(this.search);
       this.product_store.key = this.search
-       this.$router.push({name: 'products.search'});
+
+
+       this.$router.push({name: 'products.search', query: {q: this.search}});
+
 
     }
   },
