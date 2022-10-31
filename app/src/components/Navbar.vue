@@ -17,16 +17,18 @@
             <input name="search" type="search" id="default-search" v-model="search"
                    class="block p-3 pl-12 w-full text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-[#B3BA1E] focus:border-blue-500"
                    placeholder="ค้นหาสินค้า" required />
-            <router-link to="/products/search">
-            <button type="submit"
+           <router-link to="/products/search" v-on:click="searchProduct">
+            <button type="submit" v-on:click="searchProduct"
                     class="text-white absolute right-2.5 bottom-1.5  bg-[#B3BA1E] hover:bg-[#aeb347] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-1.5 py-1.5">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                    xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
+
             </button>
-            </router-link>
+           </router-link>
+
           </div>
         </form>
         <div class="justify-between items-center w-full md:flex md:w-auto md:order-1 flex">
@@ -52,11 +54,18 @@
 
 <script>
 import SearchItemView from "../views/products/SearchItemView.vue"
+import { useProductStore } from "@/stores/product.js"
+import { RouterLink, RouterView } from 'vue-router'
 export default {
+  setup() {
+    const product_store = useProductStore()
+    return { product_store }
+  },
   data() {
     return {
       search: "",
-      showSearch:''
+      showSearch:'',
+      productFilter: [],
     }
   },
   components:{
@@ -66,12 +75,21 @@ export default {
     query:{
       type:String,
       default:null,
+      // sendKey:String,
+    },
+
+  },
+  // mounted(){
+  //
+  // },
+  methods: {
+     searchProduct() {
+       // this.productFilter = this.product_store.searchProduct(this.search);
+      this.product_store.key = this.search
+       this.$router.push({name: 'products.search'});
+
     }
   },
-  mounted() {
-    console.log(this.query)
-    console.log(this.$route.query)
-  }
 }
 </script>
 

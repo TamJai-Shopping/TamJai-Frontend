@@ -18,8 +18,8 @@ const router = createRouter({
       path: '/products/search',
       name: 'products.search',
       component:Search,
-      props:route =>({ query: route.query.q })
-
+      // props:route =>({ query: route.query.sendKey })
+    // props:true
     }
   ]
 })

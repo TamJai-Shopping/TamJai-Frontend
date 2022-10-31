@@ -1,5 +1,6 @@
 <template>
   <div class="font-mono mx-auto max-w-7xl text-gray-700">
+    <SideBar />
     <div class="inline-block flex-auto grid-cols-2">
       <div class="pl-8 flex">
         <h1 class="pt-1.5 text-xl">สินค้าทั้งหมด</h1>
@@ -42,9 +43,8 @@
 <script>
 import ProductCard from '@/components/products/ProductCard.vue'
 import {useProductStore} from '@/stores/product.js'
-import SideBar from "../../components/SideBar.vue"
 import axios from "axios";
-
+import SideBar from "@/components/SideBar.vue"
 export default {
   setup() {
     const product_store = useProductStore()
@@ -59,6 +59,7 @@ export default {
       sortOption: 'default'
     }
   },
+
   watch: {
     sortOption(newOption, oldOption) {
       switch (newOption) {
@@ -72,28 +73,28 @@ export default {
           this.products = this.product_store.sortByBestSeller
           break
         default:
-          this.products = this.product_store.sortByLatest
+          this.products = this.product_store.query
+
           break;
       }
     },
   },
 
   async mounted() {
-    console.log("mounted")
-    this.error = null
+
     try {
-      await this.product_store.fetch()
+      // await this.product_store.fetch()
+      this.keywords = await this.product_store.searchProduct()
+      this.product_store.products = this.keywords
+
       this.products = this.product_store.sortByLatest
+
     } catch (error) {
       this.error = error.message
     }
   },
   methods: {
-    searchProduct() {
-      axios.get('api/products/search'+this.search, { params: { keyword: this.keyword } })
-          .then(res => this.products = res.data)
-          .catch(error => {});
-    }
+
   },
   components: {
     ProductCard,

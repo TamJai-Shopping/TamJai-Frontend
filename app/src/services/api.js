@@ -59,5 +59,13 @@ export const productAPI = {
     return {
       success: false
     }
+  },
+  async getSearch (keyword){
+    const response = await axiosInstance.get('/products/search', { params: { q: keyword } })
+
+    if (response.status == 200) {
+      return response.data
+    }
+    return []
   }
 }
