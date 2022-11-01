@@ -1,6 +1,6 @@
 <template>
   <div class="font-mono mx-auto max-w-7xl text-gray-700">
-    <div class="inline-block flex-auto grid-cols-2">
+    <div class="inline">
       <div class="pl-8 flex">
         <h1 class="pt-1.5 text-xl">สินค้าทั้งหมด</h1>
         <div class="ml-auto pr-9">
@@ -25,7 +25,7 @@
         </svg>
         <span class="sr-only">Loading...</span>
       </div>
-      <div class="pl-8 flex">
+      <div class="font-mono p-6 pt-4 flex flex-wrap justify-between">
         <div v-if="error != null">
           {{ error }}
         </div>
