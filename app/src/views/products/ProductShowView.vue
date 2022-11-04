@@ -14,13 +14,13 @@
   </div>
 
   <div>
-    <button class="bg-gray-400 block mt-4 py-2 text-white font-semibold mb-2">
+    <button @click="onClickPlusBuyAmount" class="bg-gray-400 block mt-4 py-2 text-white font-semibold mb-2">
       เพิ่ม
     </button>
-    <button class="bg-gray-400 block mt-4 py-2 text-white font-semibold mb-2">
+    <button @click="onClickMinusBuyAmount" class="bg-gray-400 block mt-4 py-2 text-white font-semibold mb-2">
       ลด
     </button>
-    <input type="text">
+    <input type="number" v-model="buyAmount">
   </div>
 
   <div class="m-8" v-if="product">
@@ -28,8 +28,10 @@
     <p>ข้อมูล {{ product.description }}</p>
     <p>ราคา {{ product.price }} บาท</p>
   </div>
-  <div class="m-8">
-    <p>หมวดหมู่</p>
+
+
+  <div v-for="categories in product.categories" v-bind:key="product.id" class="m-8">
+    <p>หมวดหมู่: {{ categories.name}}</p>
   </div>
 
   <div class="m-8" v-if="product">
@@ -45,8 +47,17 @@
       return {
         error: null,
         product: null,
-        category: null
+        buyAmount: 0
       }
+    },
+    methods: {
+      onClickPlusBuyAmount() {
+        this.buyAmount++
+      },
+      onClickMinusBuyAmount() {
+        if(this.buyAmount > 0){this.buyAmount--}
+        
+      },
     },
     async created() {
       const id = this.$route.params.id
