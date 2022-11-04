@@ -1,32 +1,13 @@
 <template>
-    <div class="m-8">
-        <h1>Test Page</h1>
+    <div v-for="basket in baskets" v-bind:key="baskets.id" class="m-8">
+        <p>ตะกร้า = จำนวน: {{ basket.quantity }} สินค้า: {{ searchProductById(basket.product_id).name }} </p>
+        <p>-----------------------------------------------</p>
     </div>
 
     <div>
-        <div>
-            <label for="name">Basket Id</label>
-            <input type="number" v-model="basket.id">
-        </div>
-
-        <div>
-            <label for="name">Product quantity</label>
-            <input type="number" v-model="basket.quantity">
-        </div>
-
-        <div>
-            <label for="total_amount">Product id</label>
-            <input type="number" v-model="basket.product_id">
-        </div>
+        ทดสอบ: {{ searchProductById(1).name }}
     </div>
-
-
-    <div>
-        <button @click="saveNewBasket()" class="bg-gray-400 block mt-4 py-2 text-white font-semibold mb-2">
-            กดเพิ่มลงตะกร้า
-        </button>
-    </div>
-
+    
 </template>
 
 <script>
@@ -67,24 +48,8 @@ export default {
             }
         },
 
-        clickButton() {
-
-        },
-        async saveNewBasket() {
-            this.error = null
-            // todo: validate data here
-            try {
-                const basket_id = await this.basket_store.add(this.basket)
-                if (basket_id) {
-                    SocketioService.sendToServer('basket', {
-                        success: true
-                    })
-                    this.$router.push(`/basket`)
-                }
-            } catch (error) {
-                this.error = error.message
-                console.error(error)
-            }
+        searchProductById(id){
+            return this.product_store.getProductById(id)
         }
 
     },
@@ -101,8 +66,12 @@ export default {
         } catch (error) {
             this.error = error.message
         }
-
-
+        
+        
     }
 }
 </script>
+
+<style scoped>
+
+</style>

@@ -50,9 +50,26 @@ export const productAPI = {
     return []
   },
   async saveNew (product) {
-    product.balance = product.total_amount
-    product.is_active = true
     const response = await axiosInstance.post('/products', product)
+    if (response.status == 201) {
+      return response.data
+    }
+    return {
+      success: false
+    }
+  }
+}
+
+export const basketAPI = {
+  async getAll () {
+    const response = await axiosInstance.get('/baskets')
+    if (response.status == 200) {
+      return response.data.data
+    }
+    return []
+  },
+  async saveNew (basket) {
+    const response = await axiosInstance.post('/baskets', basket)
     if (response.status == 201) {
       return response.data
     }

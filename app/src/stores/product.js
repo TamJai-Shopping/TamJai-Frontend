@@ -23,7 +23,10 @@ export const useProductStore = defineStore({
       return sortable.sort((a, b) => {
         return (a.name).localeCompare(b.name)
       })
-    }
+    },
+    getProductById: (state) => (id) => {
+      return state.products.find(product => product.id === id)
+    },
   }, 
 
   actions: {
