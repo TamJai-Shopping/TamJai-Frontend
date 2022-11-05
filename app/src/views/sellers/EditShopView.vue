@@ -1,7 +1,7 @@
 <template>
     <div class="lg:flex">
-            <div class="w-60 h-full shadow-md bg-[#F0EFEF] absolute font-mono">
-                <ul class="relative mt-4">
+        <div class="w-60 h-full shadow-md bg-[#F0EFEF] absolute font-mono">
+            <ul class="relative mt-4">
                     <li class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg">
                         <img src="https://cdn-icons-png.flaticon.com/512/839/839860.png" class="flex-shrink-0 w-6 h-6 text-gray-500 transition">
                         <span class="flex-1 ml-3 whitespace-nowrap">คำสั่งซื้อ</span>
@@ -69,83 +69,33 @@
                         <span class="flex-1 ml-9 whitespace-nowrap">แก้ไขร้านค้า</span>
                         </a>
                     </li>
-                </ul>
-            </div>
-            <div class="flex-initial ml-60 w-full lg:max-h-full">
-                <div class="font-mono mt-4 mx-20 overflow-x-auto relative shadow-md sm:rounded">
-                    <table class="w-full text-left text-gray-60 mr-0">
-                        <thead class="text-lg text-gray-700 bg-[#e7e7e7]">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col" class="py-3 px-6">ชื่อสินค้า</th>
-                                <th scope="col" class="py-3 px-6">คงเหลือในคลัง</th>
-                                <th scope="col" class="py-3 px-6">ราคา</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        
-                        <tbody class="m-2">
-                            <tr class="border-t text-gray-700" v-for="product in products" :key="product.id">
-                                <td class="py-3 px-6">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/2957/2957307.png" class="" width="100" height="100">  
-                                </td>
-                                <td class="py-3 px-6">
-                                    {{ product.name }}
-                                </td>
-                                <td class="py-3 px-6">
-                                    {{ product.total_amount }}
-                                </td>
-                                <td class="py-3 px-6">
-                                    {{ product.price }}
-                                </td>
-                                <td>
-                                    <a href="" class="text-gray-600 text-sm p-2 m-3 ml-0.5 rounded bg-[#e7e7e7] hover:bg-[#d3d1d1]">
-                                        แก้ไข
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </ul>
+        </div>
+        <div class="flex-initial ml-60 w-full lg:max-h-full">
+            <div class="font-mono max-w-7xl text-gray-700 px-20">
+                <h1 class="py-8 text-2xl text-center">แก้ไขร้านค้า</h1>
+                <img src="@/assets/shop.png" class="mx-auto mb-8" width="160" height="160">
+                <div class="text-center mb-6">
+                    <label class="mt-5 text-sm bg-[#F1F1F1] border-[#F1F1F1] rounded-full shadow cursor-pointer hover:bg-[#e0e0e0] p-2.5" for="file_input">แก้ไขรูปภาพ</label>
+                    <input class="hidden" id="file_input" type="file">
                 </div>
+                <form>
+                    <div class="mx-auto w-5/6 my-4">
+                        <label for="" class="mb-2 text-gray-900 dark:text-gray-300">ชื่อร้านค้า</label>
+                        <input type="text" id="" class="mt-2 bg-[#F1F1F1] border-[#F1F1F1] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                    <div class="mx-auto w-5/6 my-4">
+                        <label for="" class="block mb-2 text-gray-900 dark:text-gray-300">รายละเอียด</label>
+                        <textarea rows="4" type="text" id="" class="mt-2 bg-[#F1F1F1]  border-[#F1F1F1] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required></textarea>
+                    </div>
+                    <div class="text-center m-4">
+                        <button type="submit" class="m-2 text-center text-gray-700 bg-[#B0C03B] shadow hover:bg-[#aab03c] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg  w-full sm:w-auto px-6 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">แก้ไขร้านค้า</button>
+                    </div>
+                </form>
             </div>
-    </div>   
+        </div>
+    </div>
 </template>
 
-<script>
-import ProductSellerCard from '@/components/sellers/ProductSellerCard.vue'
-export default{
-    data(){
-        return {
-            title : "All Product",
-            selected: null,
-            products: null
-        }
-    },
-    methods: {
-        selectProduct(product){
-            this.$router.push(`products/${product.id}`)
-        }
-    },
-    async mounted(){
-        console.log("mounted")
-        try {
-            const response = await this.$axios.get('/products')
-            if (response.status === 200) {
-                this.products = response.data.data
-                console.table(this.products)
-            } else {
-                console.error(response.status)
-            }
-        } catch (error) {
-            this.error = error.message
-        }
-    },
-    components:{
-        ProductSellerCard
-    }
-}
+<script setup>
 </script>
-
-<style>
-
-</style>

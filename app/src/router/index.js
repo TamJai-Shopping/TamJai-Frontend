@@ -34,6 +34,21 @@ const router = createRouter({
       path: '/seller/products/create',
       name: 'stock.create',
       component: () => import('@/views/sellers/CreateProductSellerView.vue')
+    },
+    {
+      path: '/seller/products/edit',
+      name: 'products.edit',
+      component: () => import('@/views/sellers/EditProductSellerView.vue')
+    },
+    {
+      path: '/shop/create',
+      name: 'shop.create',
+      component: () => import('@/views/sellers/CreateShopView.vue')
+    },
+    {
+      path: '/shop/edit',
+      name: 'shop.edit',
+      component: () => import('@/views/sellers/EditShopView.vue')
     }
   ]
 })
