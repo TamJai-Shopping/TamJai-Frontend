@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Marketplace from '../views/products/Marketplace.vue'
-import CoinDeskView from '@/views/CoinDeskView.vue'
-
+import Search from '@/views/products/SearchItemView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -25,7 +24,11 @@ const router = createRouter({
       name: 'basket',
       component: () => import('@/views/BasketView.vue')
     },
-    
+    {
+      path: '/products/search',
+      name: 'products.search',
+      component: Search
+    }
   ]
 })
 

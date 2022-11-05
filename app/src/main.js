@@ -16,8 +16,6 @@ const axiosInstance = axios.create({
 })
 
 app.config.globalProperties.$axios = { ...axiosInstance }
-
 app.use(createPinia())
 app.use(router)
-
 app.mount('#app')
