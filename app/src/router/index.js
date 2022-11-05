@@ -15,6 +15,26 @@ const router = createRouter({
       name: 'products.show',
       component: () => import('@/views/products/ProductShowView.vue')
     },
+    {
+      path: '/seller/orders',
+      name: 'orders',
+      component: () => import('@/views/sellers/OrderSellerView.vue')
+    },
+    {
+      path: '/seller/products',
+      name: 'stock',
+      component: () => import('@/views/sellers/StockSellerView.vue')
+    },
+    {
+      path: '/seller/products/:id',
+      name: 'stock.show',
+      component: () => import('@/views/sellers/EditProductSellerView.vue')
+    },
+    {
+      path: '/seller/products/create',
+      name: 'stock.create',
+      component: () => import('@/views/sellers/CreateProductSellerView.vue')
+    }
   ]
 })
 
