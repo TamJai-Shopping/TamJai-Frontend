@@ -27,18 +27,13 @@ const router = createRouter({
     },
     {
       path: '/seller/products/:id',
-      name: 'stock.show',
+      name: 'stock.edit',
       component: () => import('@/views/sellers/EditProductSellerView.vue')
     },
     {
       path: '/seller/products/create',
       name: 'stock.create',
       component: () => import('@/views/sellers/CreateProductSellerView.vue')
-    },
-    {
-      path: '/seller/products/edit',
-      name: 'products.edit',
-      component: () => import('@/views/sellers/EditProductSellerView.vue')
     },
     {
       path: '/shop/create',

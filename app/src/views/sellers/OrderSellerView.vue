@@ -107,7 +107,7 @@
                                    {{ order.package_number }}
                                 </td>
                                 <td>
-                                    <a href="" class="text-gray-600 text-sm p-2 m-3 ml-0.5 rounded bg-[#e7e7e7] hover:bg-[#d3d1d1]">
+                                    <a :href="this.$axios.defaults.baseURL + '/seller/edit'" class="text-gray-600 text-sm p-2 m-3 ml-0.5 rounded bg-[#e7e7e7] hover:bg-[#d3d1d1]">
                                         แก้ไข
                                     </a>
                                 </td>
