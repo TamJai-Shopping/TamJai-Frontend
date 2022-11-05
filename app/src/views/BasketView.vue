@@ -2,24 +2,42 @@
 
 
     <div v-for="basket in baskets" v-bind:key="baskets.id" class="m-8">
-        <p>สินค้าในตระกร้าทั้งหมด = {{ basket.basketItems }} </p>
-        <p>-----------------------------------------------</p>
-        <div v-for="basketItem in basket.basketItems" v-bind:key="basket.basketItems.id" class="m-8">
+        <div v-if="basket.id == 1">
+
+            <div v-for="shop in shops" v-bind:key="shops.id" class="m-8">
+                <p>แสดงร้านค้าที่: {{ shop.id }}</p>
+
+                <!-- <p>สินค้าในตระกร้าทั้งหมด = {{ basket.basketItems }} </p> -->
+
+                <p>-----------------------------------------------</p>
+                <div v-for="basketItem in basket.basketItems" v-bind:key="basket.basketItems.id" class="m-8">
+
+                    <div v-if="shop.id == basketItem.shop_id">
+                        สินค้า: {{ searchProductById(basketItem.product_id).name }} จำนวน: {{ basketItem.quantity }}
+                        ร้านค้า: {{ basketItem.shop_id }}
+                    </div>
+
+                </div>
+
+                <div>
+                    <button @click="buyItems(shop.id)" 
+                        class="bg-gray-400 block w-full bg-angelBaby-300 mt-4 py-2 text-white font-semibold mb-2">
+                        ซื้อสินค้า
+                    </button>
+                </div>
+                <p>-----------------------------------------------</p>
+
+            </div>
 
 
 
-            สินค้า: {{ searchProductById(basketItem.product_id).name }} จำนวน: {{ basketItem.quantity }} ร้านค้า:
-            {{ basketItem.shop_id }}
         </div>
-        <p>-----------------------------------------------</p>
+
     </div>
 
-    <div>
-        <button @click="buyItems()"
-            class="bg-gray-400 block w-full bg-angelBaby-300 mt-4 py-2 text-white font-semibold mb-2">
-            ซื้อสินค้า
-        </button>
-    </div>
+
+
+
 
 
 </template>
@@ -27,12 +45,14 @@
 <script>
 import { useBasketStore } from '@/stores/basket.js'
 import { useProductStore } from '@/stores/product.js'
+import { useShopStore } from '@/stores/shop.js'
 
 export default {
     setup() {
         const basket_store = useBasketStore()
         const product_store = useProductStore()
-        return { basket_store, product_store }
+        const shop_store = useShopStore()
+        return { basket_store, product_store, shop_store }
     },
 
     data() {
@@ -40,9 +60,8 @@ export default {
             basket: {
                 id: '',
                 user_id: '',
-                product_id: '',
-                shop_id: '',
-                quantity: '',
+                selectShop: '',
+  
             },
             order: {
                 id: '',
@@ -53,8 +72,8 @@ export default {
             },
             title: "Basket List",
             baskets: null,
-            basketsByShop: null,
             products: null,
+            shops: null,
 
         }
     },
@@ -75,6 +94,12 @@ export default {
                 this.Products = this.product_store.getProducts
             }
         },
+        async refreshShops(data) {
+            if (data.refresh) {
+                await this.shop_store.fetch()
+                this.Products = this.shop_store.getShops
+            }
+        },
 
         searchProductById(id) {
             return this.product_store.getProductById(id)
@@ -84,7 +109,7 @@ export default {
             return this.basket_store.getBasketsByShop(shop_id);
         },
         buyItems(shop_id) {
-
+            this.selectShop = shop_id
         }
 
     },
@@ -98,6 +123,9 @@ export default {
 
             await this.product_store.fetch()
             this.products = this.product_store.getProducts
+
+            await this.shop_store.fetch()
+            this.shops = this.shop_store.getShops
         } catch (error) {
             this.error = error.message
         }

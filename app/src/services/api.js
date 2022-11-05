@@ -97,3 +97,22 @@ export const basketItemAPI = {
     }
   }
 }
+
+export const shopAPI = {
+  async getAll () {
+    const response = await axiosInstance.get('/shops')
+    if (response.status == 200) {
+      return response.data.data
+    }
+    return []
+  },
+  async saveNew (shop) {
+    const response = await axiosInstance.post('/shops', shop)
+    if (response.status == 201) {
+      return response.data
+    }
+    return {
+      success: false
+    }
+  }
+}
