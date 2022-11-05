@@ -1,40 +1,41 @@
 import {defineStore} from 'pinia'
-import {productAPI, categoriesAPI} from '@/services/api.js'
 
-export const useProductStore = defineStore({
-    id: 'product',
+import {categoriesAPI} from "@/services/api.js"
+
+export const useCategories = defineStore({
+    id: 'categories',
     state: () => {
         return {
-            products: [],
+            categories: [],
             query:[],
             key:"",
         }
     },
 
     getters: {
-        getProducts(state) {
-            return state.products
+        getCategories(state) {
+            return state.categories
         },
         sortByMinPriceToMaxPrice(state) {
-            const sortable = [...state.products]
+            const sortable = [...state.categories]
             return sortable.sort((a, b) => {
                 return a.price - b.price
             })
         },
         sortByMaxPriceToMinPrice(state) {
-            const sortable = [...state.products]
+            const sortable = [...state.categories]
             return sortable.sort((a, b) => {
                 return b.price - a.price
             })
         },
         sortByLatest(state) {
-            const sortable = [...state.products]
+            const sortable = [...state.categories]
             return sortable.sort((a, b) => {
                 return b.id - a.id
             })
         },
         sortByBestSeller(state) {
-            const sortable = [...state.products]
+            const sortable = [...state.categories]
             return sortable.sort((a, b) => {
                 return b.sell_amount - a.sell_amount
             })
@@ -46,29 +47,26 @@ export const useProductStore = defineStore({
 
     actions: {
         async fetch() {
-            this.products = await productAPI.getAll()
+            this.categories = await categoriesAPI.getAll()
         },
-        async add(product) {
-            const response = await productAPI.saveNew(product)
+        async add(category) {
+            const response = await categoriesAPI.saveNew(category)
             if (response.success) {
-                const product_id = response.product_id
-                this.products.push({...product})
-                return product_id
+                const categories_id = response.categories_id
+                this.categories.push({...category})
+                return categories_id
             }
             return false
         },
 
         delete(id) {
-            this.products = this.products.filter((product) => product.id != id)
+            this.categories = this.categories.filter((category) => category.id != id)
         },
         async searchProduct(key) {
-            this.products = await productAPI.getSearch(key)
-
-        },
-        async searchProductsByCategoryId(categoryId) {
-            this.products = await categoriesAPI.getProductsByCategoryId(categoryId)
+            this.categories = await categories.getSearch(key)
         }
 
     },
+
 
 })

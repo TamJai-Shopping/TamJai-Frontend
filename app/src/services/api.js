@@ -67,5 +67,39 @@ export const productAPI = {
       return response.data
     }
     return []
+  },
+}
+
+export const categoriesAPI = {
+  async getAll () {
+    const response = await axiosInstance.get('/categories')
+    if (response.status == 200) {
+      return response.data
+    }
+    return []
+  },
+  async getProductsByCategoryId (categoryId) {
+    const response = await axiosInstance.get(`/categories/${categoryId}`)
+    if (response.status == 200) {
+      return response.data.data.products
+    }
+    return []
+  }
+}
+
+export const shopAPI = {
+  async getAll() {
+    const response = await axiosInstance.get('/shops')
+    if (response.status == 200) {
+      return response.data.data
+    }
+    return []
+  },
+  async getProductsByShopId(shopId) {
+    const response = await axiosInstance.get(`/shops/${shopId}`)
+    if (response.status == 200) {
+      return response.data.data.products
+    }
+    return []
   }
 }

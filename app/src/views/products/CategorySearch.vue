@@ -1,15 +1,14 @@
 <template>
-<search-view-template :products="productView" :loading="loading" :error="error" v-model:sortOption="sortOption" />
+  <search-view-template :products="productView" :loading="loading" :error="error" v-model:sortOption="sortOption" />
 </template>
 
 <script>
 import ProductCard from '@/components/products/ProductCard.vue'
+import PickTypeView from "./PickTypeView.vue"
+import SearchViewTemplate from "./SearchViewTemplate.vue"
 import {useProductStore} from '@/stores/product.js'
-import axios from "axios";
 import SideBar from "@/components/SideBar.vue"
-import SearchViewTemplate from "./SearchViewTemplate.vue";
-import {storeToRefs} from "pinia";
-import {computed} from "vue";
+
 
 export default {
   setup() {
@@ -21,19 +20,13 @@ export default {
     return {
       error: null,
       sortOption: 'default',
-      loading: true,
-      breadcrumbs: [
-        {
-          name: "หน้าแรก",
-          link: "/"
-        },
-      ]
+      loading: true
     }
   },
 
   watch: {
-    async '$route.query.q'() {
-      await this.searchProduct()
+    async '$route.params.id'() {
+      await this.searchProductsByCategoryId()
     }
   },
   computed: {
@@ -43,23 +36,22 @@ export default {
         maxPrice: this.product_store.sortByMaxPriceToMinPrice,
         bestSeller: this.product_store.sortByBestSeller
       }
-
       return mapToGetters[this.sortOption] || this.product_store.products
     }
-
   },
 
 
   async mounted() {
-    await this.searchProduct()
+    await this.searchProductsByCategoryId()
 
   },
   methods: {
-    async searchProduct() {
+    async searchProductsByCategoryId() {
       try {
         // await this.product_store.fetch()
         this.loading = true
-        await this.product_store.searchProduct(this.$route.query.q)
+        await this.product_store.searchProductsByCategoryId(this.$route.params.id)
+        // console.log(this.product_store.searchProductsByCategoryId(this.$route.params.id))
         // change categoryId to given param
         // await this.product_store.searchProductsByCategoryId(categoryId)
 

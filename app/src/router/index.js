@@ -20,6 +20,11 @@ const router = createRouter({
       component:Search,
       // props:route =>({ query: route.query.sendKey })
     // props:true
+    },
+    {
+      path:'/categories/:id',
+      name:'categories.show',
+      component: ()=>import('@/views/products/CategorySearch.vue')
     }
   ]
 })
