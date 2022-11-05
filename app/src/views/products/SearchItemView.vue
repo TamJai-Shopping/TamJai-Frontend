@@ -1,11 +1,11 @@
 <template>
   <div class="font-mono mx-auto max-w-7xl text-gray-700">
     <div class="inline">
-      <div class="pl-8 flex">
-        <h1 class="pt-1.5 text-xl">สินค้าทั้งหมด</h1>
+      <div class="pl-8 flex mt-4">
+        <h1 class="pt-1.5 text-xl pl-14">ผลการค้นหา</h1>
         <div class="ml-auto pr-9">
           <label class="px-3 text-lg">เรียงโดย</label>
-          <select v-model="sortOption" class="rounded-lg shadow bg-gray-100 border-gray-200 py-2">
+          <select v-model="sortOption" class="rounded-lg shadow bg-gray-100 border-gray-200 py-2 mr-14">
             <option value="default">ล่าสุด</option>
             <option value="bestSeller">สินค้าขายดี</option>
             <option value="minPrice">ราคาน้อยไปมาก</option>
@@ -25,7 +25,7 @@
         </svg>
         <span class="sr-only">Loading...</span>
       </div>
-      <div class="font-mono p-6 pt-4 flex flex-wrap justify-between">
+    <div class="font-mono p-6 pt-4 flex flex-wrap justify-start pl-20">
         <div v-if="error != null">
           {{ error }}
         </div>

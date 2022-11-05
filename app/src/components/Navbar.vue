@@ -36,8 +36,8 @@
           <div class="bg-white rounded-xl">
             <a class="container flex flex-wrap justify-between items-center">
               <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class = "ml-3" style="height: 30px; width: 30px; ">
-              <div class="ml-auto pr-9">
-                <select v-model="selected" class="ml-3 rounded-lg bg-transparent border-transparent">
+              <div class="ml-auto">
+                <select v-model="selected" class="rounded-lg bg-transparent border-transparent">
                   <option disabled value="">ชื่อ user</option>
                   <option value="profile">โปรไฟล์</option>
                   <option value="setting">การตั้งค่า</option>
