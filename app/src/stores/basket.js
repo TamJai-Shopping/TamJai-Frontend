@@ -23,7 +23,10 @@ export const useBasketStore = defineStore({
       return sortable.sort((a, b) => {
         return (a.name).localeCompare(b.name)
       })
-    }
+    },
+    getBasketsByShop: (state) => (shop_id) => {
+      return state.baskets.find(basket => basket.shop_id === shop_id)
+    },
   }, 
 
   actions: {

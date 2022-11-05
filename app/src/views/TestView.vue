@@ -4,11 +4,12 @@
     </div>
 
     <div>
+
         <div>
             <label for="name">Basket Id</label>
             <input type="number" v-model="basket.id">
         </div>
-
+        
         <div>
             <label for="name">Product quantity</label>
             <input type="number" v-model="basket.quantity">
@@ -17,6 +18,11 @@
         <div>
             <label for="total_amount">Product id</label>
             <input type="number" v-model="basket.product_id">
+        </div>
+
+        <div>
+            <label for="name">User Id</label>
+            <input type="number" v-model="basket.user_id">
         </div>
     </div>
 
@@ -44,14 +50,18 @@ export default {
         return {
             basket: {
                 id: '',
+                user_id: '',
+                product_id: '',
+                shop_id: '',
                 quantity: '',
-                product_id: ''
+                
             },
             title: "Basket List",
             baskets: null,
             products: null,
         }
     },
+
     watch: {},
     methods: {
         async refreshBaskets(data) {
@@ -76,9 +86,6 @@ export default {
             try {
                 const basket_id = await this.basket_store.add(this.basket)
                 if (basket_id) {
-                    SocketioService.sendToServer('basket', {
-                        success: true
-                    })
                     this.$router.push(`/basket`)
                 }
             } catch (error) {

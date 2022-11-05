@@ -1,13 +1,27 @@
 <template>
+
+
     <div v-for="basket in baskets" v-bind:key="baskets.id" class="m-8">
-        <p>ตะกร้า = จำนวน: {{ basket.quantity }} สินค้า: {{ searchProductById(basket.product_id).name }} </p>
+        <p>สินค้าในตระกร้าทั้งหมด = {{ basket.basketItems }} </p>
+        <p>-----------------------------------------------</p>
+        <div v-for="basketItem in basket.basketItems" v-bind:key="basket.basketItems.id" class="m-8">
+
+
+
+            สินค้า: {{ searchProductById(basketItem.product_id).name }} จำนวน: {{ basketItem.quantity }} ร้านค้า:
+            {{ basketItem.shop_id }}
+        </div>
         <p>-----------------------------------------------</p>
     </div>
 
     <div>
-        ทดสอบ: {{ searchProductById(1).name }}
+        <button @click="buyItems()"
+            class="bg-gray-400 block w-full bg-angelBaby-300 mt-4 py-2 text-white font-semibold mb-2">
+            ซื้อสินค้า
+        </button>
     </div>
-    
+
+
 </template>
 
 <script>
@@ -25,13 +39,27 @@ export default {
         return {
             basket: {
                 id: '',
+                user_id: '',
+                product_id: '',
+                shop_id: '',
                 quantity: '',
-                product_id: ''
+            },
+            order: {
+                id: '',
+                status: '',
+                total_price: '',
+                package_number: '',
+
             },
             title: "Basket List",
             baskets: null,
+            basketsByShop: null,
             products: null,
+
         }
+    },
+    computed: {
+
     },
     watch: {},
     methods: {
@@ -48,8 +76,15 @@ export default {
             }
         },
 
-        searchProductById(id){
+        searchProductById(id) {
             return this.product_store.getProductById(id)
+        },
+
+        basketsByShop: function (shop_id) {
+            return this.basket_store.getBasketsByShop(shop_id);
+        },
+        buyItems(shop_id) {
+
         }
 
     },
@@ -66,8 +101,8 @@ export default {
         } catch (error) {
             this.error = error.message
         }
-        
-        
+
+
     }
 }
 </script>

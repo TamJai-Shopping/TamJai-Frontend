@@ -1,6 +1,7 @@
 <template>
-  <div class="m-8 bg-gray-400">   
-    <img src="https://pbs.twimg.com/media/FXSOQxdVUAELv2U?format=png&name=small" class="m-1 p-3" width="150" height="150">
+  <div class="m-8 bg-gray-400">
+    <img src="https://pbs.twimg.com/media/FXSOQxdVUAELv2U?format=png&name=small" class="m-1 p-3" width="150"
+      height="150">
   </div>
 
   <div>
@@ -8,7 +9,8 @@
       ซื้อเลย
     </button>
 
-    <button class="bg-gray-400 block w-full bg-angelBaby-300 mt-4 py-2 text-white font-semibold mb-2">
+    <button @click="saveNewBasketItems()"
+      class="bg-gray-400 block w-full bg-angelBaby-300 mt-4 py-2 text-white font-semibold mb-2">
       หยิบลงตะกร้า
     </button>
   </div>
@@ -31,47 +33,111 @@
 
 
   <div v-for="categories in product.categories" v-bind:key="product.id" class="m-8">
-    <p>หมวดหมู่: {{ categories.name}}</p>
+    <p>หมวดหมู่: {{ categories.name }}</p>
   </div>
 
   <div class="m-8" v-if="product">
     <h1>-----------------------------------------------</h1>
-    <h1 >{{ product }}</h1>
+    <h1>{{ product }}</h1>
   </div>
 
 </template>
   
-  <script>
-  export default {
-    data() {
-      return {
-        error: null,
-        product: null,
-        buyAmount: 0
+<script>
+import { useBasketStore } from '@/stores/basket.js'
+import { useBasketItemStore } from '@/stores/basketItem.js'
+
+export default {
+  setup() {
+    const basket_store = useBasketStore()
+    const basketItem_store = useBasketItemStore()
+    return { basket_store, basketItem_store }
+  },
+  data() {
+    return {
+      basket: {
+        id: '',
+        user_id: '',
+        selectShop: '',
+      },
+      basketItem: {
+        id: '',
+        basket_id: '',
+        product_id: '',
+        shop_id: '',
+        quantity: ''
+      },
+      error: null,
+      product: null,
+      buyAmount: 0,
+    }
+  },
+  methods: {
+    async refreshBaskets(data) {
+      if (data.refresh) {
+        await this.basket_store.fetch()
+        this.baskets = this.basket_store.getBaskets
       }
     },
-    methods: {
-      onClickPlusBuyAmount() {
-        this.buyAmount++
-      },
-      onClickMinusBuyAmount() {
-        if(this.buyAmount > 0){this.buyAmount--}
-        
-      },
+    async refreshBaskets(data) {
+      if (data.refresh) {
+        await this.basketItem_store.fetch()
+        this.baskets = this.basketItem_store.getBasketItems
+      }
     },
-    async created() {
-      const id = this.$route.params.id
-      
+    onClickPlusBuyAmount() {
+      this.buyAmount++
+    },
+    onClickMinusBuyAmount() {
+      if (this.buyAmount > 0) { this.buyAmount-- }
+
+    },
+    async saveNewBasket() {
+      this.error = null
+      this.basket.user_id = 1;
+      this.basket.selectShop = null
+
       try {
-        const response = await this.$axios.get(`/products/${id}`)
-        if (response.status == 200) {
-          this.product = response.data.data
-          console.table(this.product)
+        const basket_id = await this.basket_store.add(this.basket)
+        if (basket_id) {
+          this.$router.push(`/basket`)
         }
       } catch (error) {
-        console.log(error)
         this.error = error.message
+        console.error(error)
       }
+    },
+    async saveNewBasketItems() {
+      this.error = null
+      this.basketItem.basket_id = 1
+      this.basketItem.product_id = this.product.id
+      this.basketItem.shop_id = this.product.shop_id
+      this.basketItem.quantity = this.buyAmount
+
+      try {
+        const basketItem_id = await this.basketItem_store.add(this.basketItem)
+        if (basketItem_id) {
+          this.$router.push(`/basket`)
+        }
+      } catch (error) {
+        this.error = error.message
+        console.error(error)
+      }
+    },
+  },
+  async created() {
+    const id = this.$route.params.id
+
+    try {
+      const response = await this.$axios.get(`/products/${id}`)
+      if (response.status == 200) {
+        this.product = response.data.data
+        console.table(this.product)
+      }
+    } catch (error) {
+      console.log(error)
+      this.error = error.message
     }
   }
-  </script>
+}
+</script>

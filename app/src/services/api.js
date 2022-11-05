@@ -78,3 +78,22 @@ export const basketAPI = {
     }
   }
 }
+
+export const basketItemAPI = {
+  async getAll () {
+    const response = await axiosInstance.get('/basket-item')
+    if (response.status == 200) {
+      return response.data.data
+    }
+    return []
+  },
+  async saveNew (basketItem) {
+    const response = await axiosInstance.post('/basket-item', basketItem)
+    if (response.status == 201) {
+      return response.data
+    }
+    return {
+      success: false
+    }
+  }
+}
