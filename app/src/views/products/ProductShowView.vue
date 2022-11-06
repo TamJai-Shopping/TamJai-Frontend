@@ -234,14 +234,12 @@
           <div class="flex pl-0 space-x-1 sm:pl-2">
             <button type="file"
               class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-              <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                  d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                  clip-rule="evenodd"></path>
-              </svg>
-              <span class="sr-only">Upload image</span>
-              <!-- TODO:แก้ให้ปุ่มแนบภาพได้ -->
+                <label for="file_input" class="cursor-pointer">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="sr-only">Upload image</span></label>
+                <input class="hidden" id="file_input" type="file" @change="imageHandle" accept="image/png, image/jpeg">
             </button>
           </div>
           <button v-on:click="postNewReview(product.id)" type="submit"
