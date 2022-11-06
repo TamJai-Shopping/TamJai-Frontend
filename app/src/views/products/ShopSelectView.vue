@@ -1,13 +1,12 @@
 <template>
   <div v-if="shop != null">
-    <div class="font-mono mx-auto max-w-7xl text-gray-700">
-      <div class="pl-8 flex">
+    <div class="mx-auto font-mono text-gray-700 max-w-7xl">
+      <div class="flex pl-8">
         <div
-            class="pl-8 pt-6 text-xl w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <div class="flex justify-between items-center mt-4 p-4">
+            class="w-full my-6 text-xl bg-white border rounded-lg shadow-md sm:p-8">
+          <div class="flex items-center max-w-7xl justify-between px-4 mt-4 photoSize">
             <img :src="this.$axios.defaults.baseURL + '/images/search?shop_id=' + this.shop.id" alt="">
-            {{ this.shop.image_path }}
-            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
+            <h5 class="text-xl ml-12 font-bold leading-none text-gray-900 dark:text-white relative">
               {{ this.shop.name }}
             </h5>
           </div>
@@ -16,13 +15,13 @@
     </div>
 
 
-    <div class="font-mono mx-auto max-w-7xl text-gray-700">
+    <div class="mx-auto font-mono text-gray-700 max-w-7xl">
       <div class="inline">
-        <div class="pl-8 flex">
+        <div class="flex pl-8">
           <h1 class="pt-1.5 text-xl">สินค้าทั้งหมด</h1>
           <div class="ml-auto pr-9">
             <label class="px-3 text-lg">เรียงโดย</label>
-            <select :value="sortOption" class="rounded-lg shadow bg-gray-100 border-gray-200 py-2"
+            <select :value="sortOption" class="py-2 bg-gray-100 border-gray-200 rounded-lg shadow"
                     @input="$emit('update:sortOption', $event.target.value)">
               <option value="default">ล่าสุด</option>
               <option value="bestSeller">สินค้าขายดี</option>
@@ -32,7 +31,7 @@
           </div>
         </div>
         <div v-if="shopLoading" role="status">
-          <svg aria-hidden="true" class="mx-auto w-24 h-24 text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
+          <svg aria-hidden="true" class="w-24 h-24 mx-auto text-gray-200 animate-spin dark:text-gray-600 fill-green-500"
                fill="none" viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
@@ -43,7 +42,7 @@
           </svg>
           <span class="sr-only">Loading...</span>
         </div>
-        <div class="font-mono p-6 pt-4 flex flex-wrap justify-between">
+        <div class="flex flex-wrap justify-between p-6 pt-4 font-mono">
           <div v-if="error != null">
             {{ error }}
           </div>
@@ -106,7 +105,6 @@ export default {
         this.shop = await shopAPI.getShopById(this.$route.params.id)
         this.shopLoading = false
         this.product_store.products = this.shop.products
-        console.log(this.product_store.products)
       } catch (error) {
         this.shopLoading = true
         this.error = error.message
@@ -117,8 +115,8 @@ export default {
 </script>
 
 <style scoped>
-/*.photoSize{*/
-/*  width:200px;*/
-/*  height:200px;*/
-/*}*/
+.photoSize{
+  width:150px;
+  height:150px;
+}
 </style>
