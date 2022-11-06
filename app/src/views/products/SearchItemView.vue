@@ -48,9 +48,9 @@
           {{ error }}
         </div>
         <product-card v-for="product in productView"
-                      :key="product.id"
-                      :product="product"
-                      :url="`/products/${product.id}`">
+            :key="product.id"
+            :product="product"
+            :url="`/products/${product.id}`">
         </product-card>
       </div>
     </div>
