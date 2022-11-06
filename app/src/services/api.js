@@ -92,8 +92,8 @@ export const basketAPI = {
     }
     return []
   },
-  async getTotalPrice (keyword){
-    const response = await axiosInstance.get('/baskets/totalPrice', { params: { q: keyword } })
+  async totalPrice (user){
+    const response = await axiosInstance.get('/baskets/totalPrice', user)
 
     if (response.status == 200) {
       return response.data

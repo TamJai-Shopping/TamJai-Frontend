@@ -51,8 +51,8 @@ export const useBasketStore = defineStore({
     async delete() {
       await basketAPI.delete()
     },
-    async totalPrice(key) {
-      this.totalPrice = await basketAPI.getTotalPrice(key)
+    async totalPrice(user) {
+    this.totalPrice = await basketAPI.totalPrice(user)
     },
     async createOrder(){
       await basketAPI.createOrder()

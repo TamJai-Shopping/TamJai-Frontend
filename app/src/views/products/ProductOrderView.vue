@@ -42,7 +42,6 @@
     <div>
         <p>-----------------------------------------------</p>
         <p>test: {{basket}}</p>
-        <p>Id: {{idd}}</p>
         <p>Key: {{key}}</p>
         <button @click="getTotalPrice()">คำนวนราคา</button>
     </div>
