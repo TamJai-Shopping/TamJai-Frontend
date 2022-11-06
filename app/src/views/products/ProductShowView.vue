@@ -231,16 +231,20 @@
             placeholder="อธิบายถึงการให้คะแนน..." required=""></textarea>
         </div>
         <div class="flex justify-between items-center py-2 px-3 border-t dark:border-gray-600">
-          <div class="flex pl-0 space-x-1 sm:pl-2">
+          <div class="flex pl-0 space-x-1 sm:pl-2 items-center">
             <button type="file"
               class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                <label for="file_input" class="cursor-pointer">
-                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+              <label for="file_input" class="cursor-pointer">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                    clip-rule="evenodd"></path>
                 </svg>
                 <span class="sr-only">Upload image</span></label>
-                <input class="hidden" id="file_input" type="file" @change="imageHandle" accept="image/png, image/jpeg">
+              <input class="hidden" id="file_input" type="file" @change="imageHandle" accept="image/png, image/jpeg">
             </button>
+            <p>{{ file_name.name }}</p>
           </div>
           <button v-on:click="postNewReview(product.id)" type="submit"
             class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-gray-500 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-gray-400">
@@ -335,11 +339,12 @@ export default {
         total_price: 0,
       },
       auth: '',
-      basketItems: ''
+      basketItems: '',
+      file_name: '',
     }
   },
   watch: {
-     auth_store: {
+    auth_store: {
       immediate: true,
       deep: true,
       handler(newValue, oldValue) {
@@ -347,7 +352,7 @@ export default {
         this.auth = this.auth_store.getAuth
       }
     }
-   },
+  },
   methods: {
     async refreshBaskets(data) {
       if (data.refresh) {
@@ -370,8 +375,9 @@ export default {
       if (this.buyAmount > 1) { this.buyAmount-- }
 
     },
-
-
+    imageHandle(event) {
+      this.file_name = event.target.files[0]
+    },
     async saveNewBasketItems() {
       this.error = null
       this.initBasket.user_id = this.auth.id
@@ -411,6 +417,21 @@ export default {
           console.log(response.data.message + response.data.review_id)
           this.$router.go()
           // TODO: Make page update data without refresh
+          if (this.file_name != '') {
+            const formData = new FormData()
+            formData.append('image', this.file_name)
+            formData.append('review_id', response.data.review_id)
+            formData.append('user_id', this.new_review.user_id)
+            try {
+              const response = await this.$axios.post("/images", formData)
+              if (response.status === 201) {
+                console.log(response.data.message)
+                this.$router.go()
+              }
+            } catch (error) {
+
+            }
+          }
         }
       } catch (error) {
         this.error = error.message
