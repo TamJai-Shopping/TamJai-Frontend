@@ -59,6 +59,15 @@ export const useBasketStore = defineStore({
     },
     async createOrderItem(){
       await basketAPI.createOrderItem()
+    },
+    async initBasket (basket) {
+      const response = await basketAPI.initBasket(basket)
+      if (response.success) {
+        const basket_id = response.basket_id
+        this.baskets.push({ ...basket })
+        return basket_id
+      }
+      return false
     }
   }
 

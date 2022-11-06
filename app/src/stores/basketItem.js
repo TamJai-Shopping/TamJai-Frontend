@@ -43,10 +43,10 @@ export const useBasketItemStore = defineStore({
       }
       return false
     },
-
     async delete() {
       await basketItemAPI.delete()
     },
+    
   }
 
 })

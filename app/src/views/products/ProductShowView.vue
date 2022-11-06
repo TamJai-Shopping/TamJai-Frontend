@@ -9,7 +9,7 @@
       ซื้อเลย
     </button>
 
-    <button @click="saveNewBasket(),saveNewBasketItems()"
+    <button @click="saveNewBasketItems()"
       class="bg-gray-400 block w-full bg-angelBaby-300 mt-4 py-2 text-white font-semibold mb-2">
       หยิบลงตะกร้า
     </button>
@@ -39,7 +39,6 @@
   <div class="m-8" v-if="product">
     <h1>-----------------------------------------------</h1>
     <h1>{{ product }}</h1>
-    <p>{{baskets.getBasketsByUser(this.basket.user_id)}}</p>
   </div>
 
 </template>
@@ -98,26 +97,7 @@ export default {
     // getBasketsByUser: function (user_id) {
     //   return this.basket_store.getBasketsByUser(user_id);
     // },
-    async saveNewBasket() {
-      this.error = null
-      this.basket.user_id = 1;
-      this.basket.selectShop = null
-      this.basket.total_price = 0;
 
-      if (this.basket_store.getBasketsByUser(this.basket.user_id) == null) {
-        try {
-          const basket_id = await this.basket_store.add(this.basket)
-          // if (basket_id) {
-          //   this.$router.push(`/baskets`)
-          // }
-        } catch (error) {
-          this.error = error.message
-          console.error(error)
-        }
-      }
-
-
-    },
     async saveNewBasketItems() {
       this.error = null
       // this.basketItem.basket_id = 1
