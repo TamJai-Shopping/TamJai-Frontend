@@ -108,7 +108,7 @@ export default {
             try {
                 this.selectShop = shop_id
                 const id = this.basket_store.getBasketsByUser(auth.id).id
-                const response = await this.$axios.put(`/baskets/${id}`)
+                const response = await this.$axios.put(`/baskets/${id}`, this.basket)
                 if (response.status == 200) {
                     this.basket_id = response.data.basket_id
                     this.$router.push(`${this.basket_id}`)
