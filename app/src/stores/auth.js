@@ -38,6 +38,15 @@ export const useAuthStore = defineStore({
       return false
     },
 
+
+     async signup (email, password,phone_number) {
+          if (await authAPI.signup(email, password,phone_number)) {
+            this.fetch()
+            return true
+          }
+          return false
+        },
+
     async fetch () {
       this.auth = await authAPI.me()
       localStorage.setItem('auth.email', this.auth.email)
