@@ -1,37 +1,18 @@
 <template >
   <div class="font-mono mx-auto max-w-7xl text-gray-700">
-    <h1 class="pl-20 pt-6 text-xl mx-2">หมวดหมู่สินค้า</h1>
-    <div class="p-6 pt-4 flex flex-wrap justify-center">
-      <a href="#" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
-        <img src="https://cdn-icons-png.flaticon.com/512/2153/2153788.png" class="m-1 p-2" width="120" height="120">
-        <h2 class="text-center pt-3">ผักและผลไม้</h2>
-      </a>    
-      <a href="#" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
-        <img src="https://cdn-icons-png.flaticon.com/512/2957/2957307.png" class="m-1 p-2" width="120" height="120">
-        <h2 class="text-center pt-3">เครื่องแต่งกาย</h2>
-      </a>
-      <a href="#" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
-        <img src="https://cdn-icons-png.flaticon.com/512/3659/3659898.png" class="m-1 p-2" width="120" height="120">
-        <h2 class="text-center pt-3">อิเล็กทรอนิกส์</h2>
-      </a>
-      <a href="#" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
-        <img src="https://cdn-icons-png.flaticon.com/512/2668/2668914.png" class="m-1 p-2" width="120" height="120">
-        <h2 class="text-center pt-3">กล้องถ่ายภาพ</h2>
-      </a>
-      <a href="#" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
-        <img src="https://cdn-icons-png.flaticon.com/512/857/857418.png" class="m-1 p-2" width="120" height="120">
-        <h2 class="text-center pt-3">กีฬา</h2>
-      </a>
-      <a href="#" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
-        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331852.png" class="m-1 p-2" width="120" height="120">
-        <h2 class="text-center pt-3">เกม</h2>
-      </a>
+    <h1 class="pl-8 pt-6 text-xl">หมวดหมู่สินค้า</h1>
+    <div class="p-7 pt-4 pl-8 flex flex-wrap justify-between">
+      <categoryCard v-for="category in categories"
+                    :category="category"
+                    :key="category.id"
+                    :url="`categories/${category.id}`">
+      </categoryCard>
     </div>
     <div class="pl-8 flex">
       <h1 class="pt-1.5 text-xl pl-14">สินค้าทั้งหมด</h1>
       <div class="ml-auto pr-9">
         <label class="px-3 text-lg">เรียงโดย</label>
-        <select v-model="sortOption" class="rounded-lg shadow bg-gray-100 border-gray-200 py-2 mr-14">
+        <select v-model="sortOption" class="rounded-lg shadow bg-gray-100 border-gray-200 py-2">
           <option value="default">ล่าสุด</option>
           <option value="bestSeller">สินค้าขายดี</option>
           <option value="minPrice">ราคาน้อยไปมาก</option>
@@ -61,19 +42,24 @@
 
 <script>
   import ProductCard from '@/components/products/ProductCard.vue'
+  import CategoryCard from "../../components/products/CategoryCard.vue"
   import { useProductStore } from '@/stores/product.js'
+  import {useCategories} from "../../stores/categorie";
+
   export default {
     setup() {
       const product_store = useProductStore()
-      return { product_store }
+      const category_store = useCategories()
+      return { product_store,category_store }
     },
     data() {
         return {
+            categories: null,
             products: null,
             error: null,
-            sortOption: 'default'
+            sortOption: 'default',
         }
-    }, 
+    },
     watch: {
      sortOption (newOption, oldOption) {
        switch (newOption) {
@@ -97,13 +83,17 @@
         this.error = null
         try {
           await this.product_store.fetch()
+          await this.category_store.fetch()
+          console.log(this.category_store.categories)
           this.products = this.product_store.sortByLatest
+          this.categories = this.category_store.categories
         } catch (error) {
           this.error = error.message
         }
     },
     components: {
         ProductCard,
+        CategoryCard
     }
 }
 </script>

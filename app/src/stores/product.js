@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia'
-import {productAPI} from '@/services/api.js'
+import {productAPI, categoriesAPI} from '@/services/api.js'
+import {shopAPI} from "../services/api.js";
 
 export const useProductStore = defineStore({
     id: 'product',
@@ -63,17 +64,10 @@ export const useProductStore = defineStore({
         },
         async searchProduct(key) {
             this.products = await productAPI.getSearch(key)
-
-        }
-
+        },
+        async searchProductsByCategoryId(categoryId) {
+            this.products = await categoriesAPI.getProductsByCategoryId(categoryId)
+        },
     },
-
-    // mutations: {
-    //     setQuery(state,data) {
-    //         this.query = data
-    //         console.log(this.query)
-    //     }
-    // }
-
 
 })

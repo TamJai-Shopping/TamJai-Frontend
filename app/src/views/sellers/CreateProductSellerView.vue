@@ -79,7 +79,7 @@
                 <img :src="imageData" v-if="imageData.length > 0" class="mx-auto mb-8 rounded-lg" width="200" height="200">
                 <div class="text-center mb-6">
                     <label class="mt-5 text-sm bg-[#F1F1F1] border border-gray-300 rounded-full shadow cursor-pointer hover:bg-[#e0e0e0] p-2.5" for="file_input">เลือกรูปภาพ</label>
-                    <input class="hidden" id="file_input" @change="previewImage" type="file">
+                    <input class="hidden" id="file_input" type="file" @change="imageHandle" accept="image/png, image/jpeg">
                 </div>
                 <!-- <div>
             <div class="file-upload-form">
@@ -186,9 +186,7 @@ export default {
         },
         imageHandle(event) {
             this.img = event.target.files[0]
-        }, 
-        previewImage: function(event) {
-            // Reference to the DOM input element
+
             var input = event.target;
             // Ensure that you have a file before attempting to read it
             if (input.files && input.files[0]) {
@@ -203,7 +201,24 @@ export default {
                 // Start the reader job - read file as a data url (base64 format)
                 reader.readAsDataURL(input.files[0]);
             }
-        }
+        }//, 
+        // previewImage: function(event) {
+        //     // Reference to the DOM input element
+        //     var input = event.target;
+        //     // Ensure that you have a file before attempting to read it
+        //     if (input.files && input.files[0]) {
+        //         // create a new FileReader to read this image and convert to base64 format
+        //         var reader = new FileReader();
+        //         // Define a callback function to run, when FileReader finishes its job
+        //         reader.onload = (e) => {
+        //             // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
+        //             // Read image as base64 and set to imageData
+        //             this.imageData = e.target.result;
+        //         }
+        //         // Start the reader job - read file as a data url (base64 format)
+        //         reader.readAsDataURL(input.files[0]);
+        //     }
+        // }
     },components:{
         FilePreviewfrom
     }

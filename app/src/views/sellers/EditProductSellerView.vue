@@ -9,7 +9,7 @@
         <div>
             <figure class="relative max-w-sm transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
                 <a href="#">
-                    <img class="rounded-lg" :src="this.$axios.defaults.baseURL + '/images/search?id=' + product.id" alt="image description">
+                    <img class="rounded-lg" :src="this.$axios.defaults.baseURL + '/images/search?product_id=' + product.id" alt="image description">
                 </a>
                 <figcaption class="absolute bottom-6 px-4 text-lg text-white">
                     <p>Do you want to get notified when a new component is added to Flowbite?</p>
@@ -96,7 +96,7 @@
             <div class="font-mono mt-4 mx-20 overflow-x-auto relative">
                 <h1 class="py-8 text-2xl text-center">แก้ไขสินค้า</h1>
 
-                <img src="@/assets/shop.png" v-if="imageData.length == 0" class="mx-auto mb-8" width="200" height="200">
+                <img :src="this.$axios.defaults.baseURL + '/images/search?id=' + product.id" v-if="imageData.length == 0" class="mx-auto mb-8" width="200" height="200">
                 <img :src="imageData" v-if="imageData.length > 0" class="mx-auto mb-8 rounded-lg" width="200" height="200">
                 <div class="text-center mb-6">
                     <label class="mt-5 text-sm bg-[#F1F1F1] border border-gray-300 rounded-full shadow cursor-pointer hover:bg-[#e0e0e0] p-2.5" for="file_input">เลือกรูปภาพ</label>
@@ -196,7 +196,7 @@ export default {
             try {
                 const id = this.$route.params.id
                 const response = await this.$axios.put(`/products/${id}`, this.product)
-                if (response.status == 201) {
+                if (response.status == 200) {
                     this.product_id = response.data.product_id
                     this.$router.push(`${this.product_id}`)
                     console.log(response.data.message)
