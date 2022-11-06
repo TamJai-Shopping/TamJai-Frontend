@@ -47,11 +47,6 @@
                     </li>
                     <li>
                         <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <span class="flex-1 ml-9 whitespace-nowrap">วางขายอยู่</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <span class="flex-1 ml-9 whitespace-nowrap">สินค้าหมด</span>
                         </a>
                     </li>

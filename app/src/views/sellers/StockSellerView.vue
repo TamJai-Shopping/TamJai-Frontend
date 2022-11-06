@@ -47,11 +47,6 @@
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <span class="flex-1 ml-9 whitespace-nowrap">วางขายอยู่</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <span class="flex-1 ml-9 whitespace-nowrap">สินค้าหมด</span>
                     </a>
                 </li>
@@ -113,23 +108,44 @@
 
 <script>
 import ProductSellerCard from '@/components/sellers/ProductSellerCard.vue'
+import { useAuthStore } from '@/stores/auth.js'
 export default{
+    setup() {
+      const auth_store = useAuthStore()
+      return { auth_store }
+    },
     data(){
         return {
             title : "All Product",
             selected: null,
-            products: null
+            products: null,
+            auth: null
         }
     },
     methods: {
         selectProduct(product){
             this.$router.push(`/products/${product.id}`)
         },
+    },watch: {
+        auth_store: {
+            immediate: true,
+            deep: true,
+            handler(newValue, oldValue) {
+              console.log(newValue.getAuth)
+              this.auth = this.auth_store.getAuth
+            }
+        }
     },
     async mounted(){
         console.log("mounted")
+        
         try {
             const response = await this.$axios.get('/products')
+            if (this.auth_store.isAuthen) {
+            this.auth = this.auth_store.getAuth
+            } else {
+            this.auth = null
+            }
             if (response.status === 200) {
                 this.products = response.data.data
                 console.table(this.products)

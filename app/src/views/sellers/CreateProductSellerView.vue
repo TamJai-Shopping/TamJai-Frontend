@@ -47,11 +47,6 @@
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <span class="flex-1 ml-9 whitespace-nowrap">วางขายอยู่</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <span class="flex-1 ml-9 whitespace-nowrap">สินค้าหมด</span>
                     </a>
                 </li>
@@ -107,19 +102,19 @@
                 
                 <div class="mx-auto w-5/6 my-4">
                     <label for="price">ราคา</label>
-                    <input type="number" v-model="product.price" class="ml-5 p-2 pl-4 w-30 border-2 bg-[#F1F1F1] border-[#F1F1F1] rounded-lg">
+                    <input type="number" v-model="product.price" class="ml-5 p-2 pl-4 w-30 border-2 bg-[#F1F1F1] border-[#F1F1F1] rounded-lg" required min="1">
                     <label class="mx-4">บาท</label>
                 </div>
 
                 <div class="mx-auto w-5/6 my-4">
                     <label for="total_amount">จำนวนสินค้าในคลัง</label>
-                    <input type="number" v-model="product.total_amount" class="ml-5 p-2 pl-4 w-30 border-2 bg-[#F1F1F1] border-[#F1F1F1] rounded-lg">
+                    <input type="number" v-model="product.total_amount" class="ml-5 p-2 pl-4 w-30 border-2 bg-[#F1F1F1] border-[#F1F1F1] rounded-lg" required min="1">
                     <label class="mx-4">ชิ้น</label>
                 </div>
                 
                 <div class="mx-auto w-5/6 my-4">
                     <label for="alert_amount">แจ้งเตือนสินค้าเมื่อเหลือน้อยกว่า</label>
-                    <input type="number" v-model="product.alert_amount" class="ml-5 p-2 pl-4 w-30 border-2 bg-[#F1F1F1] border-[#F1F1F1] rounded-lg">
+                    <input type="number" v-model="product.alert_amount" class="ml-5 p-2 pl-4 w-30 border-2 bg-[#F1F1F1] border-[#F1F1F1] rounded-lg" required min="1">
                     <label class="mx-4">ชิ้น</label>
                 </div>
         

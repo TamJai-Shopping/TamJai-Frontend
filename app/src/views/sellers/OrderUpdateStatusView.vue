@@ -47,11 +47,6 @@
                 </li>
                 <li>
                     <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <span class="flex-1 ml-9 whitespace-nowrap">วางขายอยู่</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <span class="flex-1 ml-9 whitespace-nowrap">สินค้าหมด</span>
                     </a>
                 </li>
@@ -73,7 +68,7 @@
         </div>
         <div class="flex-initial ml-60 w-full lg:max-h-full">
             <div class="font-mono mt-4 mx-20 overflow-x-auto relative">
-                <h1 class="py-8 text-2xl text-center">อัพเดทสถานะคำสั่งซื้อ</h1>
+                <h1 class="py-8 text-2xl text-center">อัปเดตสถานะคำสั่งซื้อ</h1>
 
                
                 <!-- <div>
@@ -113,13 +108,13 @@
 
                 <div class="mx-auto w-5/6 my-4">
                     <label for="total_amount">เลขพัสดุ</label>
-                    <input type="text" v-model="order.package_number" class="ml-5 p-2 pl-4 w-30 border-2 bg-[#F1F1F1] border-[#F1F1F1] rounded-lg">
+                    <input type="text" v-model="order.package_number" class="ml-5 p-2 pl-4 w-30 border-2 bg-[#F1F1F1] border-[#F1F1F1] rounded-lg" required>
                 
                 </div>
                 
                 <div class="mx-auto w-5/6 my-4">
                     <label for="alert_amount">สถานะพัสดุ</label>
-                    <input type="text" v-model="order.status" class="ml-5 p-2 pl-4 w-30 border-2 bg-[#F1F1F1] border-[#F1F1F1] rounded-lg">
+                    <input type="text" v-model="order.status" class="ml-5 p-2 pl-4 w-30 border-2 bg-[#F1F1F1] border-[#F1F1F1] rounded-lg" required>
                 </div>
         
                 <div class="text-center mb-4">
