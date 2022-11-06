@@ -9,7 +9,7 @@
       ซื้อเลย
     </button>
 
-    <button @click="saveNewBasket(),saveNewBasketItems()"
+    <button @click="saveNewBasketItems()"
       class="bg-gray-400 block w-full bg-angelBaby-300 mt-4 py-2 text-white font-semibold mb-2">
       หยิบลงตะกร้า
     </button>
@@ -39,7 +39,6 @@
   <div class="m-8" v-if="product">
     <h1>-----------------------------------------------</h1>
     <h1>{{ product }}</h1>
-    <p>{{baskets.getBasketsByUser(this.basket.user_id)}}</p>
   </div>
 
 </template>

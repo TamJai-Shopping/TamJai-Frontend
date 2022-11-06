@@ -111,6 +111,7 @@ export default {
         },
         buyItems(shop_id) {
             this.selectShop = shop_id
+            // this.$router.push(`/baskets`)
         }
 
     },
