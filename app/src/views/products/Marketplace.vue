@@ -71,9 +71,9 @@
         return {
             products: null,
             error: null,
-            sortOption: 'default'
+            sortOption: 'default',
         }
-    }, 
+    },
     watch: {
      sortOption (newOption, oldOption) {
        switch (newOption) {

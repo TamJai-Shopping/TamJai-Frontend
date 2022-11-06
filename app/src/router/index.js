@@ -58,7 +58,22 @@ const router = createRouter({
       path: '/shop/edit',
       name: 'shop.edit',
       component: () => import('@/views/sellers/EditShopView.vue')
-    }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/LoginView.vue')
+	  },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: () => import('@/views/LogoutView.vue')
+	  },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import('@/views/SignUpView.vue')
+	  }
   ]
 })
 
