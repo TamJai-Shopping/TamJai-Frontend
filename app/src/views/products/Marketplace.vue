@@ -29,20 +29,6 @@
     </div>
     <div class="pl-8 flex">
       <h1 class="pt-1.5 text-xl pl-14">สินค้าทั้งหมด</h1>
-      <div class="flex justify-end">
-          <div>
-              <input type="number" min="0" v-model="priceRange.start" id="start_price" class="bg-gray-50 w-20 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          </div>
-          <p class="mx-4">-</p>
-          <div>
-              <input type="number" min="0" v-model="priceRange.end" id="end_price" class="bg-gray-50 w-20 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          </div>
-          <div class="mx-4 flex inset-y-0 left-0 items-center pl-3 cursor-pointer">
-              <button @click="priceFilter()">
-                  <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-              </button>
-          </div>
-      </div>
       <div class="ml-auto pr-9">
         <label class="px-3 text-lg">เรียงโดย</label>
         <select v-model="sortOption" class="rounded-lg shadow bg-gray-100 border-gray-200 py-2 mr-14">
@@ -86,28 +72,7 @@
             products: null,
             error: null,
             sortOption: 'default',
-            priceRange: {
-                start: null,
-                end: null
-            }
         }
-    }, 
-    methods: {
-        async priceFilter() {
-            if (this.priceRange.start == null && this.priceRange.end == null) {
-                return null
-            } else if (this.priceRange.start == 0 && this.priceRange.end == 0) {
-                return null
-            } else if (this.priceRange.end < this.priceRange.start) {
-                return null
-            }
-            await this.product_store.fetch()
-            this.products = this.product_store.sortByLatest
-            this.products = this.products.filter(product => {
-                return product.price >= this.priceRange.start && product.price <= this.priceRange.end
-            })
-            // TODO: ถ้า filter ได้แล้ว จะทำให้ sortOption กลับไปเป็น default
-        },
     },
     watch: {
      sortOption (newOption, oldOption) {

@@ -63,7 +63,6 @@ export const useProductStore = defineStore({
         },
         async searchProduct(key) {
             this.products = await productAPI.getSearch(key)
-
         }
 
     },
