@@ -1,67 +1,59 @@
 <template>
-    <div class="m-8 mt-4 bg-gray-400 p-4">
-      <div class="flex justify-end dropdown">
-        <button v-on:click="postReport()" id="dropdownBtn" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button"><svg class="w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path></svg></button>
-        <!-- Dropdown menu -->
-        <div id="dropdown_report" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 384px, 0px);">
-          <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
-            <li>
-              <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">รายงานสินค้า</a>
-            </li>
-          </ul>
-        </div>
+    <div class="font-mono m-20 my-10 text-lg bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md p-4">
+      <div class="m-8 flex items-center text-gray-700" v-if="product">
+          <img class="rounded-lg mx-20" :src="this.$axios.defaults.baseURL + '/images/search?product_id=' + product.id" width="300" height="300">
+          <div class="w-full">
+            <h1 class="text-4xl mt-2 mb-6">{{ product.name }}</h1>
+            <div class="flex items-center my-4">ราคา 
+              <p class="font-bold text-2xl mb-1 mx-4"> {{ product.price }} </p>  
+              บาท
+            </div>
+            <div class="flex items-center my-4"> ร้านค้า:
+              <a href="" class="font-bold mx-4"> {{ product.shop_id }} </a>  
+            </div>
+            <div class="my-6 flex">
+              <p>หมวดหมู่:</p>
+              <div v-for="categories in product.categories" v-bind:key="product.id" class="mx-2">
+                <a href="" class="bg-gray-200 text-base shadow rounded-lg p-2">{{ categories.name }}</a>
+              </div>
+            </div>
+            <div v-if="product" class="my-8 mr-4">
+                <p class="my-2">รายละเอียดสินค้า</p>
+                <p class="text-base text-gray-500">{{ product.description }}</p>
+            </div>
+            <div class="my-6 flex items-center">
+                <label>จำนวน</label>
+                <button @click="onClickMinusBuyAmount" class="rounded-lg shadow bg-white border border-gray-300 p-2.5 px-4 ml-4 mr-2">-</button>
+                <input type="number" v-model="buyAmount" class="text-center w-20 overflow-hidden rounded-lg shadow bg-white border border-gray-300 py-3 mr-2">
+                <button @click="onClickPlusBuyAmount" class="rounded-lg shadow bg-white border border-gray-300 p-2.5 px-4 mr-2">+</button>
+                <div class="mx-6 flex items-center my-4">
+                    <p>จำนวนสินค้าที่เหลือ: {{ product.total_amount }}</p>
+                </div>
+            </div>
+            <div class="flex">
+              <button class="bg-gray-500 w-40 py-3 px-4 text-white my-2 shadow rounded-lg">
+                ซื้อสินค้า
+              </button>
+              <button @click="saveNewBasketItems()"
+                class="bg-gray-400 py-3 px-4 my-2 mx-4 w-58 text-white flex items-center shadow rounded-lg">
+                <img src="@/assets/add-to-cart.png" class="mr-3" width="28" height="28">
+                เพิ่มไปยังตะกร้า
+              </button>
+            </div>
+            <div class="flex justify-end dropdown">
+                <a :href="'/products/' + product.id + '/report'" class="text-sm hover:text-blue-400 hover:underline cursor-pointer">รานงานสินค้าชิ้นนี้</a>
+            </div>
+          </div>
       </div>
-      <img src="https://pbs.twimg.com/media/FXSOQxdVUAELv2U?format=png&name=small" class="m-1 p-3" width="150"
-        height="150">
     </div>
 
-    <div>
-      <button class="bg-gray-400 block w-full bg-angelBaby-300 mt-4 py-2 text-white font-semibold mb-2">
-        ซื้อเลย
-      </button>
-
-      <button @click="saveNewBasketItems()"
-        class="bg-gray-400 block w-full bg-angelBaby-300 mt-4 py-2 text-white font-semibold mb-2">
-        หยิบลงตะกร้า
-      </button>
-    </div>
-
-    <div>
-      <button @click="onClickPlusBuyAmount" class="bg-gray-400 block mt-4 py-2 text-white font-semibold mb-2">
-        เพิ่ม
-      </button>
-      <button @click="onClickMinusBuyAmount" class="bg-gray-400 block mt-4 py-2 text-white font-semibold mb-2">
-        ลด
-      </button>
-      <input type="number" v-model="buyAmount">
-    </div>
-
-    <div class="m-8" v-if="product">
-      <h1 class="text-3xl">{{ product.name }}</h1>
-      <p>ข้อมูล {{ product.description }}</p>
-      <p>ราคา {{ product.price }} บาท</p>
-    </div>
-
-
-    <div v-for="categories in product.categories" v-bind:key="product.id" class="m-8">
-      <p>หมวดหมู่: {{ categories.name }}</p>
-    </div>
-
-    <div class="m-8" v-if="product">
-      <h1>-----------------------------------------------</h1>
-      <p>user: {{ users }}</p>
-    </div>
-
-    <hr class="my-4 mx-auto w-48 h-1 bg-gray-300 rounded border-0 md:my-10 dark:bg-gray-700">
-    
-    <div class="grid grid-cols-3 gap-2 px-8">
+    <div class="grid grid-cols-3 gap-2 px-8 ml-10">
       <div class="flex justify-center items-center">
           <div class="w-2/12">
-              <h1 class="text-6xl font-bold text-gray-500 flex justify-center">{{ product.rating }}</h1>
-              <p class="flex justify-center text-sm font-medium text-gray-500 dark:text-gray-400">out of 5</p>
+              <h1 v-if="product.rating != null" class="ml-10 text-6xl font-bold text-gray-500 flex justify-center">{{ product.rating }}</h1>
+              <p class="flex justify-center text-sm font-medium text-gray-500 ml-2">out of 5</p>
           </div>
-          <div class="justify-center ml-4 w-full grid-rows-5 grid-cols-1 grid">
-            
+          <div class="justify-center ml-6 w-full grid-rows-5 grid-cols-1 grid">
               <div class="justify-center items-center w-full grid-cols-3 grid">
                   <div class="flex justify-end mr-4">
                       <svg aria-hidden="true" class="w-5 h-5 text-gray-300 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Fifth star</title><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
@@ -123,11 +115,11 @@
           <div class="flex justify-center items-center ml-8">
               <p class="text-gray-500 text-xl mr-2 font-semibold">กดเพื่อให้คะแนน: </p>
               <label class="rating-label">
-                  <input v-model="new_review.rating" class="rating rating--nojs hover:cursor-pointer" oninput="this.style.setProperty('--value', this.value)" step="1" type="range" max="5">
+                  <input v-model="new_review.rating" class="rating rating--nojs hover:cursor-pointer" oninput="this.style.setProperty('--value', this.value)" step="1" type="range" max="5" min="1">
               </label>
           </div>
       </div>
-      <div class="flex justify-center row-span-2 col-span-2 col-start-2 row-start-1">
+      <div class="flex justify-center row-span-2 col-span-2 col-start-2 row-start-1 mr-2">
           <div class="mb-4 w-11/12 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
               <div class="py-2 px-4 bg-white rounded-t-lg dark:bg-gray-800">
                   <label for="review" class="sr-only">review</label>
@@ -141,21 +133,21 @@
                           <!-- TODO:แก้ให้ปุ่มแนบภาพได้ -->
                       </button>
                   </div>
-                  <button v-on:click="postNewReview(product.id)" type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-                      โพสต์
+                  <button v-on:click="postNewReview(product.id)" type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-gray-500 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-gray-400">
+                      รีวิวสินค้า
                   </button>
               </div>
           </div>
       </div>
     </div>
 
-    <div v-for="review in product.reviews" v-bind:key="product.id">
-        <hr class="my-8 h-px bg-gray-300 border-0 dark:bg-gray-700 mx-10">
+    <div v-if="product.review_count != 0" v-for="review in product.reviews" v-bind:key="product.id">
+        <hr class="my-8 h-px bg-gray-300 border-0 dark:bg-gray-700 mx-20">
 
-        <div class="my-8 ml-14">
+        <div class="my-8 ml-20">
             <figure class="max-w-screen-md">
                 <blockquote>
-                    <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ review.detail }}</p>
+                    <p class="text-2xl font-semibold text-gray-700 dark:text-white">{{ review.detail }}</p>
                 </blockquote>
                 <figcaption class="flex items-center mt-6 space-x-3">
                     <img class="w-6 h-6 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png" alt="profile picture">
@@ -190,7 +182,6 @@ export default {
   },
   data() {
     return {
-      popupActivo: false,
       basket: {
         id: '',
         user_id: '',
@@ -206,7 +197,7 @@ export default {
       error: null,
       baskets: null,
       product: null,
-      buyAmount: 0,
+      buyAmount: 1,
       new_review: {
         user_id: 1, // TODO: แก้ให้เป็น user ที่ login
         detail: '',
@@ -240,10 +231,12 @@ export default {
       }
     },
     onClickPlusBuyAmount() {
-      this.buyAmount++
+      if (this.buyAmount <= this.product.total_amount - 1) {
+        this.buyAmount++
+      }
     },
     onClickMinusBuyAmount() {
-      if (this.buyAmount > 0) { this.buyAmount-- }
+      if (this.buyAmount > 1) { this.buyAmount-- }
 
     },
 
@@ -350,6 +343,16 @@ export default {
       console.log(error)
       this.error = error.message
     }
+  },
+  watch: {
+    buyAmount(oldValue, newValue) {
+      if (oldValue > this.product.total_amount) {
+        this.buyAmount = this.product.total_amount
+      }
+      if (oldValue == null) {
+        this.buyAmount = 1
+      }
+    }
   }
 }
 </script>
@@ -363,7 +366,7 @@ export default {
         --stars: 5;
         --starsize: 3rem;
         --symbol: var(--star);
-        --value: 0;
+        --value: 1;
         --w: calc(var(--stars) * var(--starsize));
         --x: calc(100% * (var(--value) / var(--stars)));
         block-size: var(--starsize);
@@ -393,5 +396,11 @@ export default {
         opacity: 0;
         width: var(--starsize);
         -webkit-appearance: none;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 </style>
