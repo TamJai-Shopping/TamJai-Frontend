@@ -46,6 +46,11 @@ const router = createRouter({
       component: () => import('@/views/sellers/OrderSellerView.vue')
     },
     {
+      path: '/seller/orders/:id',
+      name: 'orders.update',
+      component: () => import('@/views/sellers/OrderUpdateStatusView.vue')
+    },
+    {
       path: '/seller/products',
       name: 'stock',
       component: () => import('@/views/sellers/StockSellerView.vue')
