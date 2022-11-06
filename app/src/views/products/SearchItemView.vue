@@ -43,43 +43,24 @@ export default {
       }
 
       return mapToGetters[this.sortOption] || this.product_store.products
-    }
-
+    },
   },
 
 
   async mounted() {
     await this.searchProduct()
-
   },
   methods: {
     async searchProduct() {
       try {
-        // await this.product_store.fetch()
         this.loading = true
         await this.product_store.searchProduct(this.$route.query.q)
-
         this.loading = false
-
-        // console.log(this.products)
       } catch (error) {
         this.loading = false
         this.error = error.message
       }
     },
-    async priceFilter() {
-          if (this.priceRange.start == null) this.priceRange.start = 0
-          if (this.priceRange.end == null) this.priceRange.end = 1000000
-          if (this.priceRange.end < this.priceRange.start) {
-              return null
-          }
-          await this.product_store.searchProduct(this.$route.query.q)
-          this.products = this.product_store.sortByLatest
-          this.products = this.products.filter(product => {
-              return product.price >= this.priceRange.start && product.price <= this.priceRange.end
-          })
-          // TODO: ถ้า filter ได้แล้ว จะทำให้ sortOption กลับไปเป็น default
-      },
   },
   components: {
     SearchViewTemplate,

@@ -40,10 +40,9 @@
 </template>
 
 <script>
-// If it is about search, please use this file.
+
 import ProductCard from '@/components/products/ProductCard.vue'
 import SideBar from "@/components/SideBar.vue"
-
 export default {
   props: {
     products: Array,
