@@ -1,12 +1,42 @@
 <template>
-
-    <div>
-        <h1>ProductOrderPage</h1>
-    </div>
-
-    <div v-for="basketItem in basket.basketItems" v-bind:key="basket.basketItems.id" class="m-8">
-        <p>basketItem: {{ basketItem.id }} product: {{ basketItem.product_id }}</p>
-        <!-- <p>basketItem.basketItem: {{ basketItem.basketItem }}</p> -->
+    <div class="flex items-center justify-center">
+        <div class="font-mono w-full mx-60 my-8 bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md p-4">
+            <h1 class="text-center text-2xl mt-10 mb-2">รายการสินค้าที่สั่งซื้อ</h1>
+            <div v-for="basketItem in basket.basketItems" v-bind:key="basket.basketItems.id">
+                <div class="flex items-center  mx-16">
+                    <img class="rounded-lg mr-10 mt-8" src="https://cdn-icons-png.flaticon.com/512/2957/2957307.png" width="100" height="100">
+                    <p class="mx-8">basketItem: {{ basketItem.id }}</p>
+                    <p class="mx-8">product: {{ basketItem.product_id }}</p>
+                    <p class="mx-8">จำนวน {{ basketItem.quantity }} ชิ้น</p>
+                </div>
+            </div>
+            <div class="flex ml-20 mt-10">
+                <p class="mr-4">ราคารวมทั้งหมด </p>
+                <p></p>
+                <p class="ml-4 mr-20">บาท</p>
+            </div>
+            <hr class="my-8 mx-10 h-px bg-gray-300 border">
+            <div class="mx-20">
+                <div class="w-full my-6">
+                    <label for="address">ที่อยู่จัดส่ง</label>
+                    <textarea rows="4" type="text" id="" class="mt-4 border-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required></textarea>
+                </div>
+            </div>
+            <hr class="my-8 mx-10 h-px bg-gray-300 border">
+            <div class="mx-20">
+                <div class="w-full my-6">
+                    <label for="address">การชำระเงิน</label>
+                    <select name="รหัสพนักงาน" id="รหัสพนักงาน"  class="ml-10 p-2 pl-4 w-2/4 border-2 border-gray-300 rounded-lg">
+                        <option value="เก็บเงินปลายทาง">เก็บเงินปลายทาง</option>
+                        <option value="Mobile Banking">Mobile Banking</option>
+                        <option value="บัตรเครดิต/บัตรเดบิต">บัตรเครดิต/บัตรเดบิต</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-center m-4">
+                <button type="submit" @click="createOrder()" class="m-2 text-center text-white bg-[#528D58] shadow hover:bg-[#aab03c] rounded-lg  w-full sm:w-auto px-6 py-2.5">ยืนยันการสั่งซื้อ</button>
+            </div>
+        </div> 
     </div>
 
     <div>
@@ -15,7 +45,6 @@
         <p>Id: {{idd}}</p>
         <p>Key: {{key}}</p>
         <button @click="getTotalPrice()">คำนวนราคา</button>
-        <button @click="createOrder()">Create Order</button>
     </div>
     
 </template>
