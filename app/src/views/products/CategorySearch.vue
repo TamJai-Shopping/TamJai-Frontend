@@ -47,12 +47,8 @@ export default {
   methods: {
     async searchProductsByCategoryId() {
       try {
-        // await this.product_store.fetch()
         this.loading = true
         await this.product_store.searchProductsByCategoryId(this.$route.params.id)
-        // console.log(this.product_store.searchProductsByCategoryId(this.$route.params.id))
-        // change categoryId to given param
-        // await this.product_store.searchProductsByCategoryId(categoryId)
 
         this.loading = false
 
