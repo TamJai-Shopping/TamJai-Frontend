@@ -32,37 +32,44 @@
           </div>
         </form>
         <div class="justify-between items-center w-full md:flex md:w-auto md:order-1 flex">
-          <img src="../assets/shopping-cart.png" class="mr-10" width="30" height="30">
-          <div class="bg-white rounded-xl">
-            <a class="container flex flex-wrap justify-between items-center">
-              <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class = "ml-3" style="height: 30px; width: 30px; ">
-              <div class="ml-auto">
-                <select v-model="selected" class="rounded-lg bg-transparent border-transparent">
-                  <option disabled value="">ชื่อ user</option>
-                  <option value="profile">โปรไฟล์</option>
-                  <option value="setting">การตั้งค่า</option>
-                  <option value="logOut">ออกจากระบบ</option>
-                </select>
+            <img src="../assets/shopping-cart.png" class="mr-10" width="30" height="30">
+            <div v-if="auth == null" class="">
+              <button class="flex items-center mr-2 p-2">
+                <a href="/login" class="text-white text-lg">เข้าสู่ระบบ</a>
+              </button>
+            </div>
+            <div v-else class="dropdown">
+              <button class="dropbtn flex items-center mr-2 mb-1 p-2 rounded-lg">
+                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"  style="height: 30px; width: 30px; ">
+                <p class="mx-2">{{ auth.email }}</p>
+              </button>
+              <div class="dropdown-content w-32 rounded-lg">
+                <a href="/" class="rounded-lg">การตั้งค่าบัญชีผู้ใช้</a>
+                <a href="/shop/create" class="rounded-lg">ร้านค้าของฉัน</a>
+                <a href="/logout" class="rounded-lg">ออกจากระบบ</a>
               </div>
-            </a>
-          </div>
+            </div>
           </div>
         </div>
+        
     </nav>
   </header>
 </template>
 
 <script>
 import SearchItemView from "../views/products/SearchItemView.vue"
+import { useAuthStore } from '@/stores/auth.js'
 import { useProductStore } from "@/stores/product.js"
 import { RouterLink, RouterView } from 'vue-router'
 export default {
   setup() {
     const product_store = useProductStore()
-    return { product_store }
+    const auth_store = useAuthStore()
+    return { product_store, auth_store }
   },
   data() {
     return {
+      auth: null,
       search: "",
       showSearch:'',
       productFilter: [],
@@ -79,23 +86,83 @@ export default {
     },
 
   },
-  // mounted(){
-  //
-  // },
+  watch: {
+    auth_store: {
+      immediate: true,
+      deep: true,
+      handler(newValue, oldValue) {
+        console.log(newValue.getAuth)
+        this.auth = this.auth_store.getAuth
+      }
+  },
   methods: {
-     async searchProduct() {
+      async searchProduct() {
        // this.productFilter = this.product_store.searchProduct(this.search);
       this.product_store.key = this.search
-
-
-       this.$router.push({name: 'products.search', query: {q: this.search}});
-
-
+      this.$router.push({name: 'products.search', query: {q: this.search}});
     }
+  }
   },
+  async mounted() {
+      console.log("mounted")
+      this.error = null
+      try {
+        await this.product_store.fetch()
+        await this.category_store.fetch()
+        console.log(this.category_store.categories)
+        this.products = this.product_store.sortByLatest
+        this.categories = this.category_store.categories
+      } catch (error) {
+        this.error = error.message
+      }
+
+      if (this.auth_store.isAuthen) {
+        this.auth = this.auth_store.getAuth
+      } else {
+        this.auth = null
+      }
+  }
 }
 </script>
 
-<style scoped>
+<style>
+.dropbtn {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #f9f9f9;
+}
 </style>
