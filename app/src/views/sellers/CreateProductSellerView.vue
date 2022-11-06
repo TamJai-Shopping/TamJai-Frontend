@@ -77,7 +77,7 @@
                 <img src="@/assets/shop.png" class="mx-auto mb-8" width="160" height="160">
                 <div class="text-center mb-6">
                     <label class="mt-5 text-sm bg-[#F1F1F1] border border-gray-300 rounded-full shadow cursor-pointer hover:bg-[#e0e0e0] p-2.5" for="file_input">เลือกรูปภาพ</label>
-                    <input class="hidden" id="file_input" type="file">
+                    <input class="hidden" id="file_input" type="file" @change="imageHandle" accept="image/png, image/jpeg">
                 </div>
                 <div class="mx-auto w-5/6 my-4">
                     <label for="name" class="mb-2 text-gray-900 dark:text-gray-300">ชื่อสินค้า</label>
