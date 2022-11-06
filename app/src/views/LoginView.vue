@@ -4,17 +4,14 @@
                 <RouterLink to="/" class="mx-20 text-center mb-6 text-2xl text-[#528D58] font-bold">
                     TamJai Shopping    
                 </RouterLink>
-                <div v-if="error">
-                    {{ error }}
-                </div>
                 <div class="w-full bg-[#F8F8F8] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <div class="space-y-4 md:space-y-6">
                             <h1 class="font-bold text-xl ml-36">
                                 เข้าสู่ระบบ
                             </h1>
-                            <div v-if="error">
-                                {{ error }}
+                            <div v-if="error" class="flex justify-center text-red-500 text-sm">
+                                email หรือ password ไม่ถูกต้อง
                             </div>
                             <div>
                                 <label for="email" class="block mb-2 text-gray-900 dark:text-white">อีเมล</label>

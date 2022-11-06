@@ -1,4 +1,5 @@
 <template >
+  <p v-if="auth != null">{{ auth.email }}, {{ auth.id }}</p>
   <div class="font-mono mx-auto max-w-7xl text-gray-700">
     <h1 class="pl-8 pt-6 text-xl">หมวดหมู่สินค้า</h1>
     <div class="p-7 pt-4 pl-8 flex flex-wrap justify-between">
@@ -44,16 +45,19 @@
   import ProductCard from '@/components/products/ProductCard.vue'
   import CategoryCard from "../../components/products/CategoryCard.vue"
   import { useProductStore } from '@/stores/product.js'
-  import {useCategories} from "../../stores/categorie";
+  import { useCategories } from "../../stores/categorie"
+  import { useAuthStore } from '@/stores/auth.js'
 
   export default {
     setup() {
       const product_store = useProductStore()
       const category_store = useCategories()
-      return { product_store,category_store }
+      const auth_store = useAuthStore()
+      return { product_store,category_store,auth_store }
     },
     data() {
         return {
+            auth: null,
             categories: null,
             products: null,
             error: null,
@@ -76,7 +80,15 @@
            this.products = this.product_store.sortByLatest
            break;
        }
-     } 
+     },
+     auth_store: {
+      immediate: true,
+      deep: true,
+      handler(newValue, oldValue) {
+        console.log(newValue.getAuth)
+        this.auth = this.auth_store.getAuth
+      }
+    }
    },
     async mounted() {
         console.log("mounted")
@@ -89,6 +101,12 @@
           this.categories = this.category_store.categories
         } catch (error) {
           this.error = error.message
+        }
+
+        if (this.auth_store.isAuthen) {
+          this.auth = this.auth_store.getAuth
+        } else {
+          this.auth = null
         }
     },
     components: {
