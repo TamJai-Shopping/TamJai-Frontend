@@ -26,11 +26,16 @@
         </div>
     </div>
 
-
     <div>
         <button @click="saveNewBasket()" class="bg-gray-400 block mt-4 py-2 text-white font-semibold mb-2">
             กดเพิ่มลงตะกร้า
         </button>
+    </div>
+
+    <div><p>---------------------------------------</p></div>
+
+    <div>
+        {{ products }}
     </div>
 
 </template>
@@ -38,12 +43,16 @@
 <script>
 import { useBasketStore } from '@/stores/basket.js'
 import { useProductStore } from '@/stores/product.js'
+import { useOrderStore } from '@/stores/order.js'
+
 
 export default {
     setup() {
         const basket_store = useBasketStore()
         const product_store = useProductStore()
-        return { basket_store, product_store }
+                const order_store = useOrderStore()
+
+        return { basket_store, product_store ,order_store}
     },
 
     data() {
@@ -59,6 +68,8 @@ export default {
             title: "Basket List",
             baskets: null,
             products: null,
+            orders: null,
+
         }
     },
 
@@ -74,6 +85,12 @@ export default {
             if (data.refresh) {
                 await this.product_store.fetch()
                 this.Products = this.product_store.getProducts
+            }
+        },
+        async refreshOrders(data) {
+            if (data.refresh) {
+                await this.order_store.fetch()
+                this.orders = this.order_store.getOrders
             }
         },
 
@@ -105,6 +122,9 @@ export default {
 
             await this.product_store.fetch()
             this.products = this.product_store.getProducts
+
+            await this.order_store.fetch()
+            this.orders = this.order_store.getOrders
         } catch (error) {
             this.error = error.message
         }

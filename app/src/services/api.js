@@ -116,3 +116,22 @@ export const shopAPI = {
     }
   }
 }
+
+export const orderAPI = {
+  async getAll () {
+    const response = await axiosInstance.get('/orders')
+    if (response.status == 200) {
+      return response.data.data
+    }
+    return []
+  },
+  async saveNew (order) {
+    const response = await axiosInstance.post('/orders', order)
+    if (response.status == 201) {
+      return response.data
+    }
+    return {
+      success: false
+    }
+  }
+}
