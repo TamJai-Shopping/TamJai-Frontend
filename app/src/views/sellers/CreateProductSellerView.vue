@@ -6,6 +6,15 @@
                     <img src="https://cdn-icons-png.flaticon.com/512/839/839860.png" class="flex-shrink-0 w-6 h-6 text-gray-500 transition">
                     <span class="flex-1 ml-3 whitespace-nowrap">คำสั่งซื้อ</span>
                 </li>
+                <!-- <div class="relative z-0 my-6 w-full group bg-gray-200 rounded p-6">
+                <label for="image" class="label-gray my-3">เพิ่มรูปภาพ</label>
+                <img id="previewImg" class="rounded mx-auto" accept="image/*">
+                <input class="label-gray mt-3" type="file" id="image" name="image"><br><br>
+            </div>
+
+            <div class="text-center">
+                <button class="button-gray" type="submit">แจ้งปัญหา</button>
+            </div> -->
                 <li>
                     <a href="/seller/orders" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <span class="flex-1 ml-9 whitespace-nowrap">ทั้งหมด</span>
@@ -142,8 +151,6 @@ export default {
         async saveNewProduct(){
             //validate data
             try {
-                this.product.sell_amount = 0
-                this.product.image_path = null
                 this.product.rating = 0
                 this.product.shop_id = 1
                 const response = await this.$axios.post("/products", this.product)
