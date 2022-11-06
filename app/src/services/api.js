@@ -50,6 +50,8 @@ export const productAPI = {
     return []
   },
   async saveNew (product) {
+    product.balance = product.total_amount
+    product.is_active = true
     const response = await axiosInstance.post('/products', product)
     if (response.status == 201) {
       return response.data
@@ -63,6 +65,23 @@ export const productAPI = {
 
     if (response.status == 200) {
       return response.data
+    }
+    return []
+  },
+}
+
+export const categoriesAPI = {
+  async getAll () {
+    const response = await axiosInstance.get('/categories')
+    if (response.status == 200) {
+      return response.data
+    }
+    return []
+  },
+  async getProductsByCategoryId (categoryId) {
+    const response = await axiosInstance.get(`/categories/${categoryId}`)
+    if (response.status == 200) {
+      return response.data.data.products
     }
     return []
   }
@@ -110,6 +129,15 @@ export const shopAPI = {
   async getAll () {
     const response = await axiosInstance.get('/shops')
     if (response.status == 200) {
+      return response.data.data
+    }
+    return []
+  },
+  async getShopById(shopId) {
+    const response = await axiosInstance.get(`/shops/${shopId}`)
+    if (response.status == 200) {
+      // Data of the shop itself
+      // response.data.data.products = all products the shop has
       return response.data.data
     }
     return []
