@@ -43,7 +43,7 @@
 
     <hr class="my-4 mx-auto w-48 h-1 bg-gray-300 rounded border-0 md:my-10 dark:bg-gray-700">
     
-    <form class="grid grid-cols-3 gap-2 px-8">
+    <div class="grid grid-cols-3 gap-2 px-8">
       <div class="flex justify-center items-center">
           <div class="">
               <h1 class="text-6xl font-bold text-gray-500">4.5</h1>
@@ -112,7 +112,7 @@
           <div class="flex justify-center items-center ml-8">
               <p class="text-gray-500 text-xl mr-2 font-semibold">กดเพื่อให้คะแนน: </p>
               <label class="rating-label">
-                  <input class="rating rating--nojs hover:cursor-pointer" max="5" oninput="this.style.setProperty('--value', this.value)" step="1" type="range" value="1">
+                  <input v-model="new_review.rating" class="rating rating--nojs hover:cursor-pointer" oninput="this.style.setProperty('--value', this.value)" step="1" type="range" max="5">
               </label>
           </div>
       </div>
@@ -120,7 +120,7 @@
           <div class="mb-4 w-11/12 bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
               <div class="py-2 px-4 bg-white rounded-t-lg dark:bg-gray-800">
                   <label for="review" class="sr-only">review</label>
-                  <textarea id="review" rows="3" class="px-0 w-full text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="อธิบายถึงการให้คะแนน..." required=""></textarea>
+                  <textarea v-model="new_review.detail" id="review" rows="3" class="px-0 w-full text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="อธิบายถึงการให้คะแนน..." required=""></textarea>
               </div>
               <div class="flex justify-between items-center py-2 px-3 border-t dark:border-gray-600">
                   <div class="flex pl-0 space-x-1 sm:pl-2">
@@ -130,13 +130,13 @@
                           <!-- TODO:แก้ให้ปุ่มแนบภาพได้ -->
                       </button>
                   </div>
-                  <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                  <button v-on:click="postNewReview(product.id)" type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
                       โพสต์
                   </button>
               </div>
           </div>
       </div>
-    </form>
+    </div>
 
     <div v-for="review in product.reviews" v-bind:key="product.id">
         <hr class="my-8 h-px bg-gray-300 border-0 dark:bg-gray-700 mx-10">
@@ -166,12 +166,14 @@
 <script>
 import { useBasketStore } from '@/stores/basket.js'
 import { useBasketItemStore } from '@/stores/basketItem.js'
+import { useProductStore } from '@/stores/product.js'
 
 export default {
   setup() {
     const basket_store = useBasketStore()
     const basketItem_store = useBasketItemStore()
-    return { basket_store, basketItem_store }
+    const product_store = useProductStore()
+    return { basket_store, basketItem_store, product_store }
   },
   data() {
     return {
@@ -190,12 +192,10 @@ export default {
       error: null,
       product: null,
       buyAmount: 0,
-      new_reviews: {
-        id: '',
-        product_id: '',
-        username: '',
+      new_review: {
+        user_id: 1, // TODO: แก้ให้เป็น user ที่ login
         detail: '',
-        rating: '',
+        rating: 0,
       }
     }
   },
@@ -250,6 +250,23 @@ export default {
         this.error = error.message
         console.error(error)
       }
+    },
+    async postNewReview(product_id) {
+        this.error = null
+        this.new_review.product_id = product_id
+
+        try {
+          console.table(this.new_review)
+          const response = await this.$axios.post("/reviews", this.new_review)
+          if (response.status === 201) {
+              console.log(response.data.message + response.data.review_id) 
+              this.$router.go()
+              // TODO: Make page update data without refresh
+          }
+        } catch (error) {
+          this.error = error.message
+          console.error(error)
+        }
     }
   },
   async created() {
@@ -260,6 +277,7 @@ export default {
       if (response.status == 200) {
         this.product = response.data.data
         console.table(this.product)
+        this.rating = response.data.data.rating
       }
     } catch (error) {
       console.log(error)
@@ -278,7 +296,7 @@ export default {
         --stars: 5;
         --starsize: 3rem;
         --symbol: var(--star);
-        --value: 1;
+        --value: 0;
         --w: calc(var(--stars) * var(--starsize));
         --x: calc(100% * (var(--value) / var(--stars)));
         block-size: var(--starsize);
