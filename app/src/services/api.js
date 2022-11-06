@@ -115,6 +115,15 @@ export const basketAPI = {
       return response.data
     }
     return []
+  },
+  async initBasket (basket) {
+    const response = await axiosInstance.post('/initBasket', basket)
+    if (response.status == 201) {
+      return response.data
+    }
+    return {
+      success: false
+    }
   }
 }
 

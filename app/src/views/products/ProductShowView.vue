@@ -97,26 +97,7 @@ export default {
     // getBasketsByUser: function (user_id) {
     //   return this.basket_store.getBasketsByUser(user_id);
     // },
-    async saveNewBasket() {
-      this.error = null
-      this.basket.user_id = 1;
-      this.basket.selectShop = null
-      this.basket.total_price = 0;
 
-      if (this.basket_store.getBasketsByUser(this.basket.user_id) == null) {
-        try {
-          const basket_id = await this.basket_store.add(this.basket)
-          // if (basket_id) {
-          //   this.$router.push(`/baskets`)
-          // }
-        } catch (error) {
-          this.error = error.message
-          console.error(error)
-        }
-      }
-
-
-    },
     async saveNewBasketItems() {
       this.error = null
       // this.basketItem.basket_id = 1
