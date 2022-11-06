@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia'
 import {productAPI, categoriesAPI} from '@/services/api.js'
+import {shopAPI} from "../services/api.js";
 
 export const useProductStore = defineStore({
     id: 'product',
@@ -57,18 +58,15 @@ export const useProductStore = defineStore({
             }
             return false
         },
-
         delete(id) {
             this.products = this.products.filter((product) => product.id != id)
         },
         async searchProduct(key) {
             this.products = await productAPI.getSearch(key)
-
         },
         async searchProductsByCategoryId(categoryId) {
             this.products = await categoriesAPI.getProductsByCategoryId(categoryId)
-        }
-
+        },
     },
 
 })

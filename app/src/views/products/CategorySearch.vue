@@ -4,7 +4,6 @@
 
 <script>
 import ProductCard from '@/components/products/ProductCard.vue'
-import PickTypeView from "./PickTypeView.vue"
 import SearchViewTemplate from "./SearchViewTemplate.vue"
 import {useProductStore} from '@/stores/product.js'
 import SideBar from "@/components/SideBar.vue"
@@ -43,8 +42,8 @@ export default {
 
   async mounted() {
     await this.searchProductsByCategoryId()
-
   },
+
   methods: {
     async searchProductsByCategoryId() {
       try {

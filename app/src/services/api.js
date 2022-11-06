@@ -95,10 +95,12 @@ export const shopAPI = {
     }
     return []
   },
-  async getProductsByShopId(shopId) {
+  async getShopById(shopId) {
     const response = await axiosInstance.get(`/shops/${shopId}`)
     if (response.status == 200) {
-      return response.data.data.products
+      // Data of the shop itself
+      // response.data.data.products = all products the shop has
+      return response.data.data
     }
     return []
   }

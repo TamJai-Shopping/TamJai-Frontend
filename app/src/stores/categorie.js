@@ -62,10 +62,6 @@ export const useCategories = defineStore({
         delete(id) {
             this.categories = this.categories.filter((category) => category.id != id)
         },
-        async searchProduct(key) {
-            this.categories = await categories.getSearch(key)
-        }
-
     },
 
 
