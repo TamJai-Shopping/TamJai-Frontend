@@ -116,8 +116,8 @@ export const basketAPI = {
     }
     return []
   },
-  async initBasket (basket) {
-    const response = await axiosInstance.post('/initBasket', basket)
+  async initBasket (user) {
+    const response = await axiosInstance.post('/baskets/initBasket', user)
     if (response.status == 201) {
       return response.data
     }
@@ -144,6 +144,15 @@ export const basketItemAPI = {
   },
   async saveNew (basketItem) {
     const response = await axiosInstance.post('/basket-item', basketItem)
+    if (response.status == 201) {
+      return response.data
+    }
+    return {
+      success: false
+    }
+  },
+  async createBasketItem (user) {
+    const response = await axiosInstance.post('/basket-item/createBasketItem', user)
     if (response.status == 201) {
       return response.data
     }

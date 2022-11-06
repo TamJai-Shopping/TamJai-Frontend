@@ -49,7 +49,7 @@
 
     <div class="m-8" v-if="product">
       <h1>-----------------------------------------------</h1>
-      <h1>{{ product }}</h1>
+      <p>user: {{ users }}</p>
     </div>
 
     <hr class="my-4 mx-auto w-48 h-1 bg-gray-300 rounded border-0 md:my-10 dark:bg-gray-700">
@@ -178,13 +178,15 @@
 import { useBasketStore } from '@/stores/basket.js'
 import { useBasketItemStore } from '@/stores/basketItem.js'
 import { useProductStore } from '@/stores/product.js'
+import { useAuthStore } from '@/stores/auth.js'
 
 export default {
   setup() {
     const basket_store = useBasketStore()
     const basketItem_store = useBasketItemStore()
     const product_store = useProductStore()
-    return { basket_store, basketItem_store, product_store }
+    const auth_store = useAuthStore()
+    return { basket_store, basketItem_store, product_store, auth_store }
   },
   data() {
     return {
@@ -196,7 +198,6 @@ export default {
         total_price: ''
       },
       basketItem: {
-        id: '',
         basket_id: '',
         product_id: '',
         shop_id: '',
@@ -215,7 +216,14 @@ export default {
           product_id: 0,
           user_id: 1,
           detail: '',
-      }
+      },
+      initBasket: {
+          user_id: '',
+          selectShop: null,
+          total_price: 0,
+      },
+      users: '',
+      basketItems: ''
     }
   },
   methods: {
@@ -238,24 +246,31 @@ export default {
       if (this.buyAmount > 0) { this.buyAmount-- }
 
     },
-    // getBasketsByUser: function (user_id) {
-    //   return this.basket_store.getBasketsByUser(user_id);
-    // },
+
 
     async saveNewBasketItems() {
       this.error = null
-      // this.basketItem.basket_id = 1
-      this.basketItem.basket_id = this.basket_store.getBasketsByUser(this.basket.user_id).user_id
+      this.initBasket.user_id = 1
+      try {
+        const basket_id = await this.basket_store.initBasket(this.initBasket)
+        // if (basket_id) {
+        //   this.$router.push(`/baskets`)
+        // }
+      } catch (error) {
+        this.error = error.message
+        console.error(error)
+      }
+
+      this.basketItem.basket_id = this.basket_store.getBasketsByUser(1).user_id
       this.basketItem.product_id = this.product.id
       this.basketItem.shop_id = this.product.shop_id
       this.basketItem.quantity = this.buyAmount
 
-
       try {
         const basketItem_id = await this.basketItem_store.add(this.basketItem)
-        // if (basketItem_id) {
-        //   this.$router.push(`/baskets`)
-        // }
+        if (basketItem_id) {
+          this.$router.push(`/baskets`)
+        }
       } catch (error) {
         this.error = error.message
         console.error(error)
@@ -307,7 +322,14 @@ export default {
             this.products = this.product_store.getProducts
 
             await this.shop_store.fetch()
-            this.shops = this.shop_store.getShops
+            this.shops = this.shop_store.getShops 
+            
+            await this.basketItem_store.fetch()
+            this.basketItems = this.basketItem_store.getShops
+
+            await this.auth_store.login("aungpor.napat@gmail.com", "userpass")
+            await this.auth_store.fetch()
+            this.users = this.auth_store.getAuth
         } catch (error) {
             this.error = error.message
         }

@@ -3,17 +3,24 @@
         <h1>Test Page</h1>
     </div>
 
+    <div>
+        <h1>Userrrr: {{ users }}</h1>
+    </div>
+
 </template>
 
 <script>
 import { useBasketStore } from '@/stores/basket.js'
 import { useProductStore } from '@/stores/product.js'
+import { useAuthStore } from '@/stores/auth.js'
+
 
 export default {
     setup() {
         const basket_store = useBasketStore()
         const product_store = useProductStore()
-        return { basket_store, product_store }
+        const auth_store = useAuthStore()
+        return { basket_store, product_store, auth_store }
     },
 
     data() {
@@ -29,6 +36,7 @@ export default {
             title: "Basket List",
             baskets: null,
             products: null,
+            users: null
         }
     },
 
@@ -75,6 +83,9 @@ export default {
 
             await this.product_store.fetch()
             this.products = this.product_store.getProducts
+
+            await this.auth_store.fetch()
+            this.users = this.auth_store.getAuth
         } catch (error) {
             this.error = error.message
         }
