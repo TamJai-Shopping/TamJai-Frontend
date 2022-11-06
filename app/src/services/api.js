@@ -84,12 +84,50 @@ export const basketAPI = {
     return {
       success: false
     }
+  },
+  async delete (id) {
+    const response = await axiosInstance.delete('/baskets/'+ id)
+    if (response.status == 200) {
+      return response.data.data
+    }
+    return []
+  },
+  async getTotalPrice (keyword){
+    const response = await axiosInstance.get('/baskets/totalPrice', { params: { q: keyword } })
+
+    if (response.status == 200) {
+      return response.data
+    }
+    return []
+  },
+  async createOrder (){
+    const response = await axiosInstance.post('/baskets/createOrder')
+
+    if (response.status == 200) {
+      return response.data
+    }
+    return []
+  },
+  async createOrderItem (){
+    const response = await axiosInstance.post('/baskets/createOrderItem')
+
+    if (response.status == 200) {
+      return response.data
+    }
+    return []
   }
 }
 
 export const basketItemAPI = {
   async getAll () {
     const response = await axiosInstance.get('/basket-item')
+    if (response.status == 200) {
+      return response.data.data
+    }
+    return []
+  },
+  async delete (id) {
+    const response = await axiosInstance.delete('/basket-item/'+ id)
     if (response.status == 200) {
       return response.data.data
     }

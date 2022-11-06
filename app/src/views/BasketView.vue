@@ -13,8 +13,8 @@
                 <div v-for="basketItem in basket.basketItems" v-bind:key="basket.basketItems.id" class="m-8">
 
                     <div v-if="shop.id == basketItem.shop_id">
-                        สินค้า: {{ searchProductById(basketItem.product_id).name }} จำนวน: {{ basketItem.quantity }}
-                        ร้านค้า: {{ basketItem.shop_id }}
+                        <!-- สินค้า: {{ searchProductById(basketItem.product_id).name }} จำนวน: {{ basketItem.quantity }} -->
+                        ร้านค้า: {{ basketItem.shop_id }} รหัสสินค้า: {{ basketItem.product_id }}
                     </div>
 
                 </div>
@@ -61,6 +61,7 @@ export default {
                 id: '',
                 user_id: '',
                 selectShop: '',
+                total_price: ''
   
             },
             order: {

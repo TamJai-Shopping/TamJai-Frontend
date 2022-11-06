@@ -20,9 +20,14 @@ const router = createRouter({
       component: () => import('@/views/TestView.vue')
     },
     {
-      path: '/basket',
-      name: 'basket',
+      path: '/baskets',
+      name: 'baskets',
       component: () => import('@/views/BasketView.vue')
+    },
+    {
+      path: '/baskets/:id',
+      name: 'baskets.show',
+      component: () => import('@/views/products/ProductOrderView.vue')
     },
     {
       path: '/products/search',

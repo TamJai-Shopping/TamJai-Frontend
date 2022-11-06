@@ -5,7 +5,8 @@ export const useBasketStore = defineStore({
   id: 'basket',
   state: () => {
     return {
-        baskets: []
+        baskets: [],
+        key:"",
     }
   },
   getters: {
@@ -27,6 +28,9 @@ export const useBasketStore = defineStore({
     getBasketsByShop: (state) => (shop_id) => {
       return state.baskets.find(basket => basket.shop_id === shop_id)
     },
+    getBasketsByUser: (state) => (user_id) => {
+      return state.baskets.find(basket => basket.user_id === user_id)
+    },
   }, 
 
   actions: {
@@ -44,8 +48,17 @@ export const useBasketStore = defineStore({
       return false
     },
 
-    delete (id) {
-      this.baskets = this.baskets.filter((basket) => basket.id != id)
+    async delete() {
+      await basketAPI.delete()
+    },
+    async totalPrice(key) {
+      this.totalPrice = await basketAPI.getTotalPrice(key)
+    },
+    async createOrder(){
+      await basketAPI.createOrder()
+    },
+    async createOrderItem(){
+      await basketAPI.createOrderItem()
     }
   }
 
