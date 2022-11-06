@@ -3,6 +3,20 @@
     <div class="inline">
       <div class="pl-8 flex mt-4">
         <h1 class="pt-1.5 text-xl pl-14">ผลการค้นหา</h1>
+        <div class="flex justify-end">
+            <div>
+                <input type="number" min="0" v-model="priceRange.start" id="start_price" class="bg-gray-50 w-20 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            <p class="mx-4">-</p>
+            <div>
+                <input type="number" min="0" v-model="priceRange.end" id="end_price" class="bg-gray-50 w-20 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            <div class="mx-4 flex inset-y-0 left-0 items-center pl-3 cursor-pointer">
+                <button @click="priceFilter()">
+                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+            </div>
+        </div>
         <div class="ml-auto pr-9">
           <label class="px-3 text-lg">เรียงโดย</label>
           <select v-model="sortOption" class="rounded-lg shadow bg-gray-100 border-gray-200 py-2 mr-14">
@@ -25,14 +39,18 @@
         </svg>
         <span class="sr-only">Loading...</span>
       </div>
+      
+    <!-- <div v-if="product == null">
+        <p class="text-center mt-4 text-gray-500">ไม่พบสินค้าที่ค้นหา</p>
+    </div> -->
     <div class="font-mono p-6 pt-4 flex flex-wrap justify-start pl-20">
         <div v-if="error != null">
           {{ error }}
         </div>
         <product-card v-for="product in productView"
-                      :key="product.id"
-                      :product="product"
-                      :url="`/products/${product.id}`">
+            :key="product.id"
+            :product="product"
+            :url="`/products/${product.id}`">
         </product-card>
       </div>
     </div>
@@ -55,14 +73,16 @@ export default {
 
   data() {
     return {
-
-
       error: null,
       sortOption: 'default',
-      loading: true
+      loading: true,
+      priceRange: {
+          start: null,
+          end: null
+      },
+      products: null
     }
   },
-
   watch: {
     async '$route.query.q'() {
       await this.searchProduct()
@@ -79,8 +99,6 @@ export default {
     }
 
   },
-
-
   async mounted() {
     await this.searchProduct()
 
@@ -99,7 +117,20 @@ export default {
         this.loading = false
         this.error = error.message
       }
-    }
+    },
+    async priceFilter() {
+          if (this.priceRange.start == null) this.priceRange.start = 0
+          if (this.priceRange.end == null) this.priceRange.end = 1000000
+          if (this.priceRange.end < this.priceRange.start) {
+              return null
+          }
+          await this.product_store.searchProduct(this.$route.query.q)
+          this.products = this.product_store.sortByLatest
+          this.products = this.products.filter(product => {
+              return product.price >= this.priceRange.start && product.price <= this.priceRange.end
+          })
+          // TODO: ถ้า filter ได้แล้ว จะทำให้ sortOption กลับไปเป็น default
+      },
   },
   components: {
     ProductCard,
