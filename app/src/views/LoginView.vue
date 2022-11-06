@@ -1,13 +1,12 @@
 <template>
     <section>
-        <div class="flex flex-col items-center justify-center font-mono px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <form @submit.prevent="onFormSubmit()" class="flex flex-col items-center justify-center font-mono px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <RouterLink to="/" class="mx-20 text-center mb-6 text-2xl text-[#528D58] font-bold">
                     TamJai Shopping    
                 </RouterLink>
                 <div v-if="error">
                     {{ error }}
-                    </div>
-                <form @submit.prevent="onFormSubmit()">
+                </div>
                 <div class="w-full bg-[#F8F8F8] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <div class="space-y-4 md:space-y-6">
@@ -34,42 +33,41 @@
                         </div>
                     </div>
                 </div>
-                </form>  
-        </div>
+            </form>  
     </section>
 </template>
 
-                    <script>
-                    import { useAuthStore } from '@/stores/auth.js'
+<script>
+import { useAuthStore } from '@/stores/auth.js'
 
-                    export default {
-                    setup() {
-                        const auth_store = useAuthStore()
-                        return { auth_store }
-                    },
-                    data() {
-                        return {
-                        email: '',
-                        password: '',
-                        error: null,
-                        disabledButton: false
-                        }
-                    },
-                    methods: {
-                        async onFormSubmit() {
-                        this.error = null
-                        this.disabledButton = true
-                        try {
-                            if (await this.auth_store.login(this.email, this.password)) {
-                            this.$router.push('/')
-                            } else {
-                            this.disabledButton = false
-                            }
-                        } catch (error) {
-                            this.error = error.message
-                            this.disabledButton = false
-                        }
-                        }
-                    },
-                    }
-                    </script>
+export default {
+setup() {
+    const auth_store = useAuthStore()
+    return { auth_store }
+},
+data() {
+    return {
+    email: '',
+    password: '',
+    error: null,
+    disabledButton: false
+    }
+},
+methods: {
+    async onFormSubmit() {
+    this.error = null
+    this.disabledButton = true
+    try {
+        if (await this.auth_store.login(this.email, this.password)) {
+        this.$router.push('/')
+        } else {
+        this.disabledButton = false
+        }
+    } catch (error) {
+        this.error = error.message
+        this.disabledButton = false
+    }
+    }
+},
+}
+</script>
