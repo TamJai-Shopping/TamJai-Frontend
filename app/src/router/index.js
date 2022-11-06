@@ -16,14 +16,24 @@ const router = createRouter({
       component: () => import('@/views/products/ProductShowView.vue')
     },
     {
+      path: '/products/:id/report',
+      name: 'products.report',
+      component: () => import('@/views/products/ReportProductView.vue')
+    },
+    {
       path: '/test',
       name: 'test',
       component: () => import('@/views/TestView.vue')
     },
     {
-      path: '/basket',
-      name: 'basket',
+      path: '/baskets',
+      name: 'baskets',
       component: () => import('@/views/BasketView.vue')
+    },
+    {
+      path: '/baskets/:id',
+      name: 'baskets.show',
+      component: () => import('@/views/products/ProductOrderView.vue')
     },
     {
       path: '/products/search',
@@ -84,7 +94,7 @@ const router = createRouter({
       path: '/signup',
       name: 'signup',
       component: () => import('@/views/SignUpView.vue')
-	  }
+	  },
   ]
 })
 

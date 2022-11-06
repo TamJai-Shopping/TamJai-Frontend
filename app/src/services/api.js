@@ -103,6 +103,46 @@ export const basketAPI = {
     return {
       success: false
     }
+  },
+  async delete (id) {
+    const response = await axiosInstance.delete('/baskets/'+ id)
+    if (response.status == 200) {
+      return response.data.data
+    }
+    return []
+  },
+  async totalPrice (user){
+    const response = await axiosInstance.get('/baskets/totalPrice', user)
+
+    if (response.status == 200) {
+      return response.data
+    }
+    return []
+  },
+  async createOrder (){
+    const response = await axiosInstance.post('/baskets/createOrder')
+
+    if (response.status == 200) {
+      return response.data
+    }
+    return []
+  },
+  async createOrderItem (){
+    const response = await axiosInstance.post('/baskets/createOrderItem')
+
+    if (response.status == 200) {
+      return response.data
+    }
+    return []
+  },
+  async initBasket (user) {
+    const response = await axiosInstance.post('/baskets/initBasket', user)
+    if (response.status == 201) {
+      return response.data
+    }
+    return {
+      success: false
+    }
   }
 }
 
@@ -114,8 +154,24 @@ export const basketItemAPI = {
     }
     return []
   },
+  async delete (id) {
+    const response = await axiosInstance.delete('/basket-item/'+ id)
+    if (response.status == 200) {
+      return response.data.data
+    }
+    return []
+  },
   async saveNew (basketItem) {
     const response = await axiosInstance.post('/basket-item', basketItem)
+    if (response.status == 201) {
+      return response.data
+    }
+    return {
+      success: false
+    }
+  },
+  async createBasketItem (user) {
+    const response = await axiosInstance.post('/basket-item/createBasketItem', user)
     if (response.status == 201) {
       return response.data
     }

@@ -43,10 +43,10 @@ export const useBasketItemStore = defineStore({
       }
       return false
     },
-
-    delete (id) {
-      this.basketItems = this.basketItems.filter((basketItem) => basketItem.id != id)
-    }
+    async delete() {
+      await basketItemAPI.delete()
+    },
+    
   }
 
 })

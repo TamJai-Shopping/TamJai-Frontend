@@ -4,33 +4,7 @@
     </div>
 
     <div>
-
-        <div>
-            <label for="name">Basket Id</label>
-            <input type="number" v-model="basket.id">
-        </div>
-        
-        <div>
-            <label for="name">Product quantity</label>
-            <input type="number" v-model="basket.quantity">
-        </div>
-
-        <div>
-            <label for="total_amount">Product id</label>
-            <input type="number" v-model="basket.product_id">
-        </div>
-
-        <div>
-            <label for="name">User Id</label>
-            <input type="number" v-model="basket.user_id">
-        </div>
-    </div>
-
-
-    <div>
-        <button @click="saveNewBasket()" class="bg-gray-400 block mt-4 py-2 text-white font-semibold mb-2">
-            กดเพิ่มลงตะกร้า
-        </button>
+        <h1>Userrrr: {{ users }}</h1>
     </div>
 
 </template>
@@ -38,12 +12,15 @@
 <script>
 import { useBasketStore } from '@/stores/basket.js'
 import { useProductStore } from '@/stores/product.js'
+import { useAuthStore } from '@/stores/auth.js'
+
 
 export default {
     setup() {
         const basket_store = useBasketStore()
         const product_store = useProductStore()
-        return { basket_store, product_store }
+        const auth_store = useAuthStore()
+        return { basket_store, product_store, auth_store }
     },
 
     data() {
@@ -59,6 +36,7 @@ export default {
             title: "Basket List",
             baskets: null,
             products: null,
+            users: null
         }
     },
 
@@ -77,8 +55,8 @@ export default {
             }
         },
 
-        clickButton() {
-
+        totalPriceButton() {
+            baskets.totalPrice()
         },
         async saveNewBasket() {
             this.error = null
@@ -105,11 +83,28 @@ export default {
 
             await this.product_store.fetch()
             this.products = this.product_store.getProducts
+
+            await this.auth_store.fetch()
+            this.users = this.auth_store.getAuth
         } catch (error) {
             this.error = error.message
         }
 
 
+    },
+    async created() {
+    const id = this.$route.params.id
+
+    try {
+      const response = await this.$axios.get(`/baskets/${id}`)
+      if (response.status == 200) {
+        this.product = response.data.data
+        console.table(this.product)
+      }
+    } catch (error) {
+      console.log(error)
+      this.error = error.message
     }
+  }
 }
 </script>
