@@ -1,7 +1,7 @@
 <template>
     <div class="font-mono m-20 my-10 text-lg bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md p-4">
       <div class="m-8 flex items-center text-gray-700" v-if="product">
-          <img class="rounded-lg mx-20" :src="this.$axios.defaults.baseURL + '/images/search?id=' + product.id" width="300" height="300">
+          <img class="rounded-lg mx-20" :src="this.$axios.defaults.baseURL + '/images/search?product_id=' + product.id" width="300" height="300">
           <div class="w-full">
             <h1 class="text-4xl mt-2 mb-6">{{ product.name }}</h1>
             <div class="flex items-center my-4">ราคา 
@@ -24,7 +24,7 @@
             <div class="my-6">
               <label>จำนวน</label>
               <button @click="onClickMinusBuyAmount" class="rounded-lg shadow bg-white border border-gray-300 p-2.5 px-4 ml-4 mr-2">-</button>
-              <input type="number" v-model="buyAmount" class="text-center w-20 rounded-lg shadow bg-white border border-gray-300 py-3 mr-2">
+              <input type="number" v-model="buyAmount" class="text-center w-20 overflow-hidden rounded-lg shadow bg-white border border-gray-300 py-3 mr-2">
               <button @click="onClickPlusBuyAmount" class="rounded-lg shadow bg-white border border-gray-300 p-2.5 px-4 mr-2">+</button>
             </div>
             <div class="flex">
@@ -55,7 +55,7 @@
     <div class="grid grid-cols-3 gap-2 px-8 ml-10">
       <div class="flex justify-center items-center">
           <div class="w-2/12">
-              <h1 class="ml-10 text-6xl font-bold text-gray-500 flex justify-center">{{ product.rating }}</h1>
+              <h1 v-if="product.rating != null" class="ml-10 text-6xl font-bold text-gray-500 flex justify-center">{{ product.rating }}</h1>
               <p class="flex justify-center text-sm font-medium text-gray-500 ml-2">out of 5</p>
           </div>
           <div class="justify-center ml-6 w-full grid-rows-5 grid-cols-1 grid">
@@ -147,7 +147,7 @@
       </div>
     </div>
 
-    <div v-for="review in product.reviews" v-bind:key="product.id">
+    <div v-if="product.review_count != 0" v-for="review in product.reviews" v-bind:key="product.id">
         <hr class="my-8 h-px bg-gray-300 border-0 dark:bg-gray-700 mx-20">
 
         <div class="my-8 ml-20">
@@ -357,5 +357,11 @@ export default {
         opacity: 0;
         width: var(--starsize);
         -webkit-appearance: none;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 </style>
