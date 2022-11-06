@@ -5,11 +5,15 @@ export const useShopStore = defineStore({
   id: 'shop',
   state: () => {
     return {
-        shops: []
+        shops: [],
+        query: [],
+        key: "",
     }
   },
   getters: {
-    getShops: (state) => state.shops,
+    getShops(state) {
+        return state.shops
+    },
 
     sortByPoint (state) {
       const sortable = [...state.shops]
@@ -46,7 +50,7 @@ export const useShopStore = defineStore({
 
     delete (id) {
       this.shops = this.shops.filter((shop) => shop.id != id)
+
     }
   }
-
 })

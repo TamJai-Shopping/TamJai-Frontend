@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TamJai-Frontend.iml" filepath="$PROJECT_DIR$/.idea/TamJai-Frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/newTamJaiFrontEnd.iml" filepath="$PROJECT_DIR$/.idea/newTamJaiFrontEnd.iml" />
     </modules>
   </component>
 </project>

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Marketplace from '../views/products/Marketplace.vue'
 import Search from '@/views/products/SearchItemView.vue'
+import ShopSelectView from "@/views/products/ShopSelectView.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -32,7 +33,17 @@ const router = createRouter({
     {
       path: '/products/search',
       name: 'products.search',
-      component: Search
+      component:Search,
+    },
+    {
+      path:'/categories/:id',
+      name:'categories.show',
+      component: ()=>import('@/views/products/CategorySearch.vue')
+    },
+    {
+      path:'/shops/:id',
+      name:'shops.select.show',
+      component: ShopSelectView
     },
     {
       path: '/seller/orders',
@@ -63,7 +74,22 @@ const router = createRouter({
       path: '/shop/edit',
       name: 'shop.edit',
       component: () => import('@/views/sellers/EditShopView.vue')
-    }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/LoginView.vue')
+	  },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: () => import('@/views/LogoutView.vue')
+	  },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import('@/views/SignUpView.vue')
+	  }
   ]
 })
 
