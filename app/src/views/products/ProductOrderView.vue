@@ -12,14 +12,14 @@
             </div>
             <div class="flex ml-20 mt-10">
                 <p class="mr-4">ราคารวมทั้งหมด </p>
-                <p></p>
+                <p>{{ basket.total_price }}</p>
                 <p class="ml-4 mr-20">บาท</p>
             </div>
             <hr class="my-8 mx-10 h-px bg-gray-300 border">
             <div class="mx-20">
                 <div class="w-full my-6">
                     <label for="address">ที่อยู่จัดส่ง</label>
-                    <textarea rows="4" type="text" id="" class="mt-4 border-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required></textarea>
+                    <textarea v-model="createOrder.location" rows="4" type="text" id="" class="mt-4 border-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required></textarea>
                 </div>
             </div>
             <hr class="my-8 mx-10 h-px bg-gray-300 border">
@@ -65,12 +65,12 @@ export default {
 
     data() {
         return {
-            order: {
-                id: '',
-                status: '',
-                total_price: '',
-                package_number: '',
-
+            createOrder: {
+                user_id: '',
+                location: '',
+            },
+            createOrderItem: {
+                user_id: '',
             },
             title: "Basket List",
             basket: null,
@@ -125,8 +125,10 @@ export default {
             // this.basket_store.totalPrice()
         },
         createOrder(){
-            this.basket_store.createOrder()
-            this.basket_store.createOrderItem()
+            this.createOrder.user_id = 1
+            this.createOrderItem.user_id = 1
+            this.basket_store.createOrder($createOrder)
+            this.basket_store.createOrderItem(createOrderItem)
             // this.basket_store.delete()
             // this.basketItem_store.delete()
         }

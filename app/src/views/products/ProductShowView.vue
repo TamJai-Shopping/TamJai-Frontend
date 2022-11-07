@@ -380,7 +380,8 @@ export default {
     },
     async saveNewBasketItems() {
       this.error = null
-      this.initBasket.user_id = this.auth.id
+      // this.initBasket.user_id = this.auth.id
+      this.initBasket.user_id = 1
       try {
         const basket_id = await this.basket_store.initBasket(this.initBasket)
         // if (basket_id) {
@@ -391,7 +392,8 @@ export default {
         console.error(error)
       }
 
-      this.basketItem.basket_id = this.basket_store.getBasketsByUser(this.auth.id).user_id
+      // this.basketItem.basket_id = this.basket_store.getBasketsByUser(this.auth.id).user_id
+      this.basketItem.basket_id = this.basket_store.getBasketsByUser(1).user_id
       this.basketItem.product_id = this.product.id
       this.basketItem.shop_id = this.product.shop_id
       this.basketItem.quantity = this.buyAmount
