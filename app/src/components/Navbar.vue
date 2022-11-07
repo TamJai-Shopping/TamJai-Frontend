@@ -34,9 +34,9 @@
         <div class="justify-between items-center w-full md:flex md:w-auto md:order-1 flex">
           <!-- <img src="../assets/shopping-cart.png" class="mr-10" width="30" height="30"> -->
           <div>
-            <button @click="pushToBasketView">
+            <RouterLink to="/baskets" class="text-white text-2xl font-bold">
               <img src="../assets/shopping-cart.png" class="mr-10" width="30" height="30">
-            </button>
+            </RouterLink>
           </div>
           <div v-if="auth == null" class="">
             <button class="flex items-center mr-2 p-2">
