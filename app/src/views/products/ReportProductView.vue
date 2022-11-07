@@ -1,5 +1,6 @@
 <template>
-    <form v-if="auth != null"
+    <!-- <form v-if="auth != null" -->
+    <form
         class="font-mono m-20 my-10 text-lg bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md p-4">
         <h1 class="text-2xl">รายงาน</h1>
         <div class="my-4">
@@ -66,9 +67,9 @@
             <button @click="postReport()" class="bg-red-600 rounded-lg p-2 hover:bg-red-400 text-white">รายงาน</button>
         </div>
     </form>
-    <div v-else class="wall">
-        <unauth/>
-    </div>
+    <!-- <div v-else class="wall"> -->
+        <!-- <unauth/>
+    </div> -->
 </template>
 
 <script>

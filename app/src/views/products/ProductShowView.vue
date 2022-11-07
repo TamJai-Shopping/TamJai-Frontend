@@ -325,7 +325,7 @@ export default {
       product: null,
       buyAmount: 1,
       new_review: {
-        user_id: null, // TODO: แก้ให้เป็น user ที่ login
+        user_id: 1, // TODO: แก้ให้เป็น user ที่ login
         detail: null,
         rating: 1,
       },
@@ -411,10 +411,18 @@ export default {
     async postNewReview(product_id) {
       this.error = null
       this.new_review.product_id = product_id
+      if (this.auth == null) {
+            this.new_review.user_id = 1
+          }
+
+      if (this.new_review.detail == null) {
+        this.new_review.detail = 'review'
+      }
 
       try {
         console.table(this.new_review)
         const response = await this.$axios.post("/reviews", this.new_review)
+        
         if (response.status === 201) {
           console.log(response.data.message + response.data.review_id)
           this.$router.go()
@@ -424,6 +432,7 @@ export default {
             formData.append('image', this.file_name)
             formData.append('review_id', response.data.review_id)
             formData.append('user_id', this.auth.id)
+            formData.append('product_id', product_id)
             try {
               const response = await this.$axios.post("/images", formData)
               if (response.status === 201) {
@@ -431,11 +440,12 @@ export default {
                 this.$router.go()
               }
             } catch (error) {
-
+              
             }
           }
         }
       } catch (error) {
+        this.new_review.detail = "คุณรีวิวไปแล้ว"
         this.error = error.message
         console.error(error)
       }

@@ -11,7 +11,7 @@
                 <div class="w-full bg-[#F8F8F8] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <div class="space-y-4 md:space-y-6">
-                            <h1 class="font-bold text-xl ml-36">
+                            <h1 class="font-bold text-xl text-left">
                                 สมัครบัญชี
                             </h1>
                             
