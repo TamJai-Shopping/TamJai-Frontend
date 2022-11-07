@@ -171,7 +171,7 @@ export default {
                 const response = await this.$axios.put(`/products/${id}`, this.product)
                 if (response.status == 200) {
                     this.product_id = response.data.product_id
-                    this.$router.push(`${this.product_id}`)
+                    this.$router.push('/seller/products')
                     console.log(response.data.message)
 
                     let formData = new FormData()
