@@ -64,7 +64,8 @@ export default {
             baskets: null,
             products: null,
             shops: null,
-            auth: ''
+            auth: '',
+            productName: ''
 
         }
     },
@@ -103,6 +104,7 @@ export default {
         },
 
         basketsByShop: function (shop_id) {
+            
             return this.basket_store.getBasketsByShop(shop_id);
         },
         async buyItems(shop_id) {
@@ -124,9 +126,9 @@ export default {
 
         },
         emergencyPush(shop_id){
-            this.selectShop = shop_id
-            const id = shop_id
-            this.$router.push(`/baskets/${id}`)
+            this.basket.selectShop = shop_id
+            this.basket_store.update(this.basket, this.basket_store.getBasketsByUser(1))
+            this.$router.push(`/baskets/1`)
         }
 
     },

@@ -128,6 +128,7 @@ export default {
             this.basket_store.createOrderItem(this.$orderItem)
             // this.basket_store.delete()
             // this.basketItem_store.delete()
+            this.$router.push(`/`)
         }
 
     },

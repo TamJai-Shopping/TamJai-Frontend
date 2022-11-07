@@ -104,6 +104,15 @@ export const basketAPI = {
       success: false
     }
   },
+  async update (basket) {
+    const response = await axiosInstance.put('/baskets/1', basket)
+    if (response.status == 201) {
+      return response.data
+    }
+    return {
+      success: false
+    }
+  },
   async delete (id) {
     const response = await axiosInstance.delete('/baskets/'+ id)
     if (response.status == 200) {
