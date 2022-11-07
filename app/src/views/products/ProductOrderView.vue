@@ -3,10 +3,10 @@
         <div class="font-mono w-full mx-60 my-8 bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md p-4">
             <h1 class="text-center text-2xl mt-10 mb-2">รายการสินค้าที่สั่งซื้อ</h1>
             <div v-for="basketItem in basket.basketItems" v-bind:key="basket.basketItems.id">
-                <div class="flex items-center  mx-16">
+                <div v-if="basketItem.shop_id == basket.selectShop" class="flex items-center  mx-16">
                     <img class="rounded-lg mr-10 mt-8" src="https://cdn-icons-png.flaticon.com/512/2957/2957307.png" width="100" height="100">
                     <p class="mx-8">basketItem: {{ basketItem.id }}</p>
-                    <p class="mx-8">product: {{ basketItem.product_id }}</p>
+                    <p class="mx-8">product: {{ basketItem.product_name }}</p>
                     <p class="mx-8">จำนวน {{ basketItem.quantity }} ชิ้น</p>
                 </div>
             </div>
@@ -30,6 +30,7 @@
                         <option value="เก็บเงินปลายทาง">เก็บเงินปลายทาง</option>
                         <option value="Mobile Banking">Mobile Banking</option>
                         <option value="บัตรเครดิต/บัตรเดบิต">บัตรเครดิต/บัตรเดบิต</option>
+                        <p class="mx-8">ร้านค้า {{ basket.shop_id }} ชิ้น</p>
                     </select>
                 </div>
             </div>
@@ -75,6 +76,7 @@ export default {
             title: "Basket List",
             basket: null,
             basketItems: '',
+            basketItemByShop: '',
             key: ''
 
         }
@@ -146,6 +148,7 @@ export default {
 
             await this.basketItem_store.fetch()
             this.basketItems = this.basketItem_store.getBaskets
+            // this.basketItemByShop = this.basketItem_store.getBasketItemsByShop(basket.selectShop)
         } catch (error) {
             this.error = error.message
         }

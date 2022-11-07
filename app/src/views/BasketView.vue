@@ -20,12 +20,13 @@
                         <img class="rounded-lg mr-10" src="https://cdn-icons-png.flaticon.com/512/2957/2957307.png"
                             width="100" height="100">
                         <!-- <p class="mx-8">ชื่อสินค้า: {{ searchProductById(basketItem.product_id).name }}</p> -->
-                        <p class="mx-8">ชื่อสินค้า: {{ basketItem.product_id }}</p>
+                        <p class="mx-8">ชื่อสินค้า: {{ basketItem.product_name }}</p>
                         <p class="mx-8">จำนวน: {{ basketItem.quantity }} ชิ้น</p>
+                        <p class="mx-8">ราคาต่อชิ้น: {{ basketItem.product_price }} </p>
                     </div>
                 </div>
                 <div class="mx-10">
-                    <button @click="emergencyPush(shop.id)"
+                    <button @click="buyItems(shop.id)"
                         class="bg-gray-400 block w-full rounded-lg mt-4 py-2 text-white font-semibold mb-2">
                         ซื้อสินค้า
                     </button>
@@ -57,7 +58,7 @@ export default {
                 id: '',
                 user_id: '',
                 selectShop: '',
-                total_price: ''
+                
 
             },
             order: {
@@ -116,16 +117,20 @@ export default {
         },
         async buyItems(shop_id) {
             try {
-                this.selectShop = shop_id
+                this.basket.id = 1
+                this.basket.user_id = 1
+                this.basket.selectShop = shop_id
                 const id = this.basket_store.getBasketsByUser(1).id
-                const response = await this.$axios.put(`/baskets/${id}`, this.basket)
-                if (response.status == 200) {
-                    this.basket_id = response.data.basket_id
-                    this.$router.push(`${this.basket_id}`)
-                    console.log(response.data.message)
+                // const response = await this.$axios.put(`/baskets/${id}`, this.basket)
+                console.log(this.basket)
+                const response = await this.basket_store.update(this.basket)
+                // if (response.status == 201) {
+                //     this.basket_id = response.data.basket_id
+                //     this.$router.push(`${this.basket_id}`)
+                //     console.log(response.data.message)
 
-                }
-                this.$router.push(`/baskets`)
+                // }
+                this.$router.push('/baskets/' + this.basket.id)
             } catch (error) {
                 this.error = error.message
                 console.log(error)
@@ -136,6 +141,9 @@ export default {
             this.basket.selectShop = shop_id
             this.basket_store.update(this.basket, this.basket_store.getBasketsByUser(1))
             this.$router.push(`/baskets/1`)
+        },
+        getProductFromId(product_id){
+            
         }
 
     },

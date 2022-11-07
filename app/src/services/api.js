@@ -105,7 +105,8 @@ export const basketAPI = {
     }
   },
   async update (basket) {
-    const response = await axiosInstance.put('/baskets/1', basket)
+    const url = '/baskets/' + basket.id
+    const response = await axiosInstance.put(url, basket)
     if (response.status == 201) {
       return response.data
     }
