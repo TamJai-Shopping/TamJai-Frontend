@@ -15,7 +15,7 @@
         <div class="my-6 flex">
           <p>หมวดหมู่:</p>
           <div v-for="categories in product.categories" v-bind:key="product.id" class="mx-2">
-            <a href="" class="bg-gray-200 text-base shadow rounded-lg p-2">{{ categories.name }}</a>
+            <a :href="`/categories/${categories.id}`" class="bg-gray-200 text-base shadow rounded-lg p-2">{{ categories.name }}</a>
           </div>
         </div>
         <div v-if="product" class="my-8 mr-4">
