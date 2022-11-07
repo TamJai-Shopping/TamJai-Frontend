@@ -11,26 +11,26 @@
                         <span class="flex-1 ml-9 whitespace-nowrap">ทั้งหมด</span>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <span class="flex-1 ml-9 whitespace-nowrap">ที่ต้องจัดส่ง</span>
                         </a>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <span class="flex-1 ml-9 whitespace-nowrap">ระหว่างจัดส่ง</span>
                         </a>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <span class="flex-1 ml-9 whitespace-nowrap">สำเร็จ</span>
                         </a>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <span class="flex-1 ml-9 whitespace-nowrap">การยกเลิกสินค้า</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg">
                         <img src="https://cdn-icons-png.flaticon.com/512/4947/4947410.png" class="flex-shrink-0 w-6 h-6 text-gray-500 transition">
                         <span class="flex-1 ml-3 whitespace-nowrap">คลังสินค้า</span>       
@@ -45,16 +45,16 @@
                         <span class="flex-1 ml-9 whitespace-nowrap">สินค้าทั้งหมด</span>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <span class="flex-1 ml-9 whitespace-nowrap">สินค้าหมด</span>
                         </a>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <span class="flex-1 ml-9 whitespace-nowrap">สินค้าที่ถูกรายงาน</span>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg">
                         <img src="https://cdn-icons-png.flaticon.com/512/3524/3524636.png" class="flex-shrink-0 w-6 h-6 text-gray-500 transition">
                         <span class="flex-1 ml-3 whitespace-nowrap">ตั้งค่าร้านค้า</span>
