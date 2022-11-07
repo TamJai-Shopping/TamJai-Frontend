@@ -228,7 +228,7 @@
           <label for="review" class="sr-only">review</label>
           <textarea v-model="new_review.detail" id="review" rows="3"
             class="px-0 w-full text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-            placeholder="อธิบายถึงการให้คะแนน..." required=""></textarea>
+            placeholder="อธิบายถึงการให้คะแนน..." required></textarea>
         </div>
         <div class="flex justify-between items-center py-2 px-3 border-t dark:border-gray-600">
           <div class="flex pl-0 space-x-1 sm:pl-2 items-center">
@@ -307,6 +307,7 @@ export default {
   },
   data() {
     return {
+      auth: null,
       basket: {
         id: '',
         user_id: '',
@@ -324,13 +325,13 @@ export default {
       product: null,
       buyAmount: 1,
       new_review: {
-        user_id: 1, // TODO: แก้ให้เป็น user ที่ login
-        detail: '',
-        rating: 0,
+        user_id: this.auth.id, // TODO: แก้ให้เป็น user ที่ login
+        detail: null,
+        rating: 1,
       },
       report: {
         product_id: 0,
-        user_id: 1,
+        user_id: this.auth.id,
         detail: '',
       },
       initBasket: {
@@ -338,7 +339,6 @@ export default {
         selectShop: null,
         total_price: 0,
       },
-      auth: '',
       basketItems: '',
       file_name: '',
     }
@@ -421,7 +421,7 @@ export default {
             const formData = new FormData()
             formData.append('image', this.file_name)
             formData.append('review_id', response.data.review_id)
-            formData.append('user_id', this.new_review.user_id)
+            formData.append('user_id', this.auth_store.getAuth.id)
             try {
               const response = await this.$axios.post("/images", formData)
               if (response.status === 201) {
