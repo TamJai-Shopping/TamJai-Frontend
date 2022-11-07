@@ -1,7 +1,9 @@
 <template >
   <div class="font-mono mx-auto max-w-7xl text-gray-700 px-20">
     <h1 class="py-8 text-2xl text-center">เปิดร้านค้า</h1>
-    <img @change="imageHandle" src="@/assets/shop.png" class="mx-auto mb-8" width="160" height="160">
+    <!-- <img @change="imageHandle" src="@/assets/shop.png" class="mx-auto mb-8" width="160" height="160"> -->
+    <img src="@/assets/shop.png" v-if="image.length == 0" class="mx-auto mb-8" width="200" height="200">
+    <img :src="image" v-if="image.length > 0" class="mx-auto mb-8 rounded-lg" width="200" height="200">
     <div class="text-center mb-6">
         <label class="mt-5 text-sm bg-[#F1F1F1] border-[#F1F1F1] rounded-full shadow cursor-pointer hover:bg-[#e0e0e0] p-2.5" for="file_input">เลือกรูปภาพ</label>
         <input class="hidden" id="file_input" type="file">
@@ -33,17 +35,38 @@ export default {
     },
     data() {
         return{
-            image: null,
+            auth: null,
+            image: '',
             name: null,
             description: null,
         }
+    },
+    created() {
+        this.auth = this.auth_store.auth
     },
     methods: {
         imageHandle(e){
             this.image = e.target.files[0]
         },
-        openNewStore() {
+        async openNewStore() {
+            let formData = new FormData()
+            formData.append('name', this.name)
+            formData.append('description', this.description)
+            formData.append('user_id', this.auth.id)
+            let response = await this.$axios.post('/shops', formData)
 
+            console.log(response)
+            
+            formData = new FormData()
+            formData.append('image', this.image)
+            formData.append('shop_id', response.data.shop_id)
+            response = await this.$axios.post('/images', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+            console.log(response)
+            this.$router.push('/seller/products')
         }
     },
 }
