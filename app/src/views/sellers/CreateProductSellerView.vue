@@ -25,15 +25,6 @@
                     <span class="flex-1 ml-9 whitespace-nowrap">สินค้าทั้งหมด</span>
                     </a>
                 </li>
-                <li class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3524/3524636.png" class="flex-shrink-0 w-6 h-6 text-gray-500 transition">
-                    <span class="flex-1 ml-3 whitespace-nowrap">ตั้งค่าร้านค้า</span>
-                </li>
-                <li>
-                    <a href="/shop/edit" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <span class="flex-1 ml-9 whitespace-nowrap">แก้ไขร้านค้า</span>
-                    </a>
-                </li>
             </ul>
         </div>
         <div class="flex-initial ml-60 w-full lg:max-h-full">

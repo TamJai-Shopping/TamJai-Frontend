@@ -99,7 +99,12 @@ const router = createRouter({
       path: '/user/profile/edit',
       name: 'user.edit',
       component: () => import('../views/user/EditProfileView.vue')
-    }
+    },
+    {
+      path: '/seller/orders/:id',
+      name: 'orders.update',
+      component: () => import('@/views/sellers/OrderUpdateStatusView.vue')
+    },
   ]
 })
 
