@@ -78,12 +78,20 @@
 
 <script>
 import ProductSellerCard from '@/components/sellers/ProductSellerCard.vue'
+import { useAuthStore } from '@/stores/auth.js'
+import { useProductStore } from "@/stores/product.js"
 export default{
+    setup() {
+    const product_store = useProductStore()
+    const auth_store = useAuthStore()
+    return { product_store, auth_store }
+  },
     data(){
         return {
             title : "All Product",
             selected: null,
-            products: null
+            products: null,
+            auth : null
         }
     },
     methods: {
