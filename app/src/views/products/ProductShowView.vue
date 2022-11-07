@@ -35,11 +35,11 @@
           </div>
         </div>
         <div class="flex">
-          <button class="bg-gray-500 w-40 py-3 px-4 text-white my-2 shadow rounded-lg">
+          <button class="hidden bg-gray-500 w-40 py-3 px-4 text-white my-2 shadow rounded-lg">
             ซื้อสินค้า
           </button>
           <button @click="saveNewBasketItems()"
-            class="bg-gray-400 py-3 px-4 my-2 mx-4 w-58 text-white flex items-center shadow rounded-lg">
+            class="bg-gray-400 py-3 px-4 my-2 w-58 text-white flex items-center shadow rounded-lg">
             <img src="@/assets/add-to-cart.png" class="mr-3" width="28" height="28">
             เพิ่มไปยังตะกร้า
           </button>

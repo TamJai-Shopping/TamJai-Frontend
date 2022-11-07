@@ -46,7 +46,6 @@
               <p class="mx-2">{{ auth.email }}</p>
             </button>
             <div class="dropdown-content w-32 rounded-lg">
-              <a href="/user/profile/edit" class="rounded-lg">แก้ไขข้อมูลผู้ใช้</a>
               <a href="/shop/create" class="rounded-lg">ร้านค้าของฉัน</a>
               <a href="/logout" class="rounded-lg">ออกจากระบบ</a>
             </div>

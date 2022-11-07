@@ -1,22 +1,21 @@
 <template>
   <div v-if="shop != null">
     <div class="font-mono mx-auto max-w-7xl text-gray-700">
-      <div class="pl-8 flex">
+      <div class="pl-8 flex items-start">
         <div
-            class="pl-8 pt-6 text-xl w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <div class="flex justify-between items-center mt-4 p-4">
-            <img :src="this.$axios.defaults.baseURL + '/images/search?shop_id=' + this.shop.id" alt="">
+            class="flex items-center mt-4 h-36 text-xl text-left w-full max-w-md bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <img src="@/assets/shop.png" class="mx-auto mb-8 mt-6" width="80" height="80">
+                <img :src="this.$axios.defaults.baseURL + '/images/search?shop_id=' + this.shop.id" alt="">
             {{ this.shop.image_path }}
-            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
+            <h5 class="text-xl font-bold text-left mr-40 leading-none text-gray-900 dark:text-white">
               {{ this.shop.name }}
             </h5>
-          </div>
         </div>
       </div>
     </div>
 
 
-    <div class="font-mono mx-auto max-w-7xl text-gray-700">
+    <div class="font-mono mx-auto mt-6 max-w-7xl text-gray-700">
       <div class="inline">
         <div class="pl-8 flex">
           <h1 class="pt-1.5 text-xl">สินค้าทั้งหมด</h1>

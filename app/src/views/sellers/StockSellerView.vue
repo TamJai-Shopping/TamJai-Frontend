@@ -103,6 +103,11 @@ export default{
         console.log("mounted")
         try {
             const response = await this.$axios.get('/products')
+            if (this.auth_store.isAuthen) {
+      this.auth = this.auth_store.getAuth
+    } else {
+      this.auth = null
+    }
             if (response.status === 200) {
                 this.products = response.data.data
                 console.table(this.products)
