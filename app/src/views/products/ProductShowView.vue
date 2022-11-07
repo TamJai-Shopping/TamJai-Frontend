@@ -10,12 +10,12 @@
           บาท
         </div>
         <div class="flex items-center my-4"> ร้านค้า:
-          <a href="" class="font-bold mx-4"> {{ product.shop_id }} </a>
+          <a :href="`/shops/${product.shop_id}`" class="font-bold mx-4"> {{ product.shop_id }} </a>
         </div>
         <div class="my-6 flex">
           <p>หมวดหมู่:</p>
           <div v-for="categories in product.categories" v-bind:key="product.id" class="mx-2">
-            <a href="" class="bg-gray-200 text-base shadow rounded-lg p-2">{{ categories.name }}</a>
+            <a :href="`/categories/${categories.id}`" class="bg-gray-200 text-base shadow rounded-lg p-2">{{ categories.name }}</a>
           </div>
         </div>
         <div v-if="product" class="my-8 mr-4">
@@ -407,6 +407,7 @@ export default {
         this.error = error.message
         console.error(error)
       }
+      this.$router.push(`/baskets`)
     },
     async postNewReview(product_id) {
       this.error = null

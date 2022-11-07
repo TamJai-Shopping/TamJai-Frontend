@@ -104,6 +104,15 @@ export const basketAPI = {
       success: false
     }
   },
+  async update (basket) {
+    const response = await axiosInstance.put('/baskets/1', basket)
+    if (response.status == 201) {
+      return response.data
+    }
+    return {
+      success: false
+    }
+  },
   async delete (id) {
     const response = await axiosInstance.delete('/baskets/'+ id)
     if (response.status == 200) {
@@ -119,16 +128,16 @@ export const basketAPI = {
     }
     return []
   },
-  async createOrder (){
-    const response = await axiosInstance.post('/baskets/createOrder')
+  async createOrder (user){
+    const response = await axiosInstance.post('/baskets/createOrder', user)
 
     if (response.status == 200) {
       return response.data
     }
     return []
   },
-  async createOrderItem (){
-    const response = await axiosInstance.post('/baskets/createOrderItem')
+  async createOrderItem (user){
+    const response = await axiosInstance.post('/baskets/createOrderItem',user)
 
     if (response.status == 200) {
       return response.data

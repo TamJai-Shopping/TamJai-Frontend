@@ -2,10 +2,10 @@
   <div class="font-mono mx-auto max-w-7xl text-gray-700">
     <div class="inline">
       <div class="pl-8 flex">
-        <h1 class="pt-1.5 text-xl">สินค้าทั้งหมด</h1>
-        <div class="ml-auto pr-9">
-          <label class="px-3 text-lg">เรียงโดย</label>
-          <select :value="sortOption" @input="$emit('update:sortOption', $event.target.value)"  class="rounded-lg shadow bg-gray-100 border-gray-200 py-2">
+        <h1 class="pt-1.5 text-xl mt-6 pl-14">สินค้าทั้งหมด</h1>
+        <div class="ml-auto pr-9 mt-6">
+          <label class="px-3 text-lg ">เรียงโดย</label>
+          <select :value="sortOption" @input="$emit('update:sortOption', $event.target.value)"  class="rounded-lg shadow bg-gray-100 border-gray-200 py-2 mr-14">
             <option value="default">ล่าสุด</option>
             <option value="bestSeller">สินค้าขายดี</option>
             <option value="minPrice">ราคาน้อยไปมาก</option>
@@ -25,7 +25,7 @@
         </svg>
         <span class="sr-only">Loading...</span>
       </div>
-      <div class="font-mono p-6 pt-4 flex flex-wrap justify-between">
+      <div class="font-mono p-6 pt-4 flex flex-wrap justify-start pl-20">
         <div v-if="error != null">
           {{ error }}
         </div>

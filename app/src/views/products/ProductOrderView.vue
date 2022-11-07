@@ -19,7 +19,7 @@
             <div class="mx-20">
                 <div class="w-full my-6">
                     <label for="address">ที่อยู่จัดส่ง</label>
-                    <textarea v-model="createOrder.location" rows="4" type="text" id="" class="mt-4 border-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required></textarea>
+                    <textarea rows="4" type="text" id="" class="mt-4 border-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required></textarea>
                 </div>
             </div>
             <hr class="my-8 mx-10 h-px bg-gray-300 border">
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="text-center m-4">
-                <button type="submit" @click="createOrder()" class="m-2 text-center text-white bg-[#528D58] shadow hover:bg-[#aab03c] rounded-lg  w-full sm:w-auto px-6 py-2.5">ยืนยันการสั่งซื้อ</button>
+                <button type="submit" @click="createOrder" class="m-2 text-center text-white bg-[#528D58] shadow hover:bg-[#aab03c] rounded-lg  w-full sm:w-auto px-6 py-2.5">ยืนยันการสั่งซื้อ</button>
             </div>
         </div> 
     </div>
@@ -42,7 +42,7 @@
     <div>
         <p>-----------------------------------------------</p>
         <p>test: {{basket}}</p>
-        <p>Key: {{key}}</p>
+        <p>order: {{order}}</p>
         <button @click="getTotalPrice()">คำนวนราคา</button>
     </div>
     
@@ -65,11 +65,11 @@ export default {
 
     data() {
         return {
-            createOrder: {
+            order: {
                 user_id: '',
-                location: '',
+                location: 'aaaa',
             },
-            createOrderItem: {
+            orderItem: {
                 user_id: '',
             },
             title: "Basket List",
@@ -78,9 +78,6 @@ export default {
             key: ''
 
         }
-    },
-    computed: {
-
     },
     watch: {},
     methods: {
@@ -125,12 +122,13 @@ export default {
             // this.basket_store.totalPrice()
         },
         createOrder(){
-            this.createOrder.user_id = 1
-            this.createOrderItem.user_id = 1
-            this.basket_store.createOrder($createOrder)
-            this.basket_store.createOrderItem(createOrderItem)
+            this.order.user_id = 1
+            this.orderItem.user_id = 1
+            this.basket_store.createOrder(this.$order)
+            this.basket_store.createOrderItem(this.$orderItem)
             // this.basket_store.delete()
             // this.basketItem_store.delete()
+            this.$router.push(`/`)
         }
 
     },

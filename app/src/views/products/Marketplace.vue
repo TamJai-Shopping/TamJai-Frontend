@@ -1,17 +1,53 @@
 <template >
-  <p v-if="auth != null">{{ auth.email }}, {{ auth.id }}</p>
   <div class="font-mono mx-auto max-w-7xl text-gray-700">
-    <h1 class="pl-8 pt-6 text-xl">หมวดหมู่สินค้า</h1>
-    <div class="p-7 pt-4 pl-8 flex flex-wrap justify-between">
-      <categoryCard v-for="category in categories"
-                    :category="category"
-                    :key="category.id"
-                    :url="`categories/${category.id}`">
-      </categoryCard>
-    </div>
+    <h1 class="pl-20 pt-6 text-xl mx-2">หมวดหมู่สินค้า</h1>
+     <div class="p-6 pt-4 flex flex-wrap justify-center">
+       <a href="/categories/1" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
+         <img src="https://cdn-icons-png.flaticon.com/512/2153/2153788.png" class="m-1 p-2" width="120" height="120">
+         <h2 class="text-center pt-3">Vegetable</h2>
+       </a> 
+       <a href="/categories/2" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
+         <img src="https://cdn-icons-png.flaticon.com/512/2957/2957307.png" class="m-1 p-2" width="120" height="120">
+         <h2 class="text-center pt-3">Fashion</h2>
+       </a>   
+       <a href="/categories/3" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
+         <img src="https://cdn-icons-png.flaticon.com/512/3659/3659898.png" class="m-1 p-2" width="120" height="120">
+         <h2 class="text-center pt-3">Electronic</h2>
+       </a>
+       <a href="/categories/4" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
+         <img src="https://cdn-icons-png.flaticon.com/512/2668/2668914.png" class="m-1 p-2" width="120" height="120">
+         <h2 class="text-center pt-3">Camera</h2>
+       </a>
+       <a href="/categories/5" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
+         <img src="https://cdn-icons-png.flaticon.com/512/857/857418.png" class="m-1 p-2" width="120" height="120">
+         <h2 class="text-center pt-3">Sport</h2>
+       </a>
+       <a href="/categories/6" class="mx-2 block p-5 max-w-sm bg-[#F8F8F8] rounded-lg border border-gray-200 shadow-md hover:bg-gray-100">
+         <img src="https://cdn-icons-png.flaticon.com/512/2331/2331852.png" class="m-1 p-2" width="120" height="120">
+         <h2 class="text-center pt-3">Game</h2>
+       </a>
+     </div>
+
     <div class="pl-8 flex">
       <h1 class="pt-1.5 text-xl pl-14">สินค้าทั้งหมด</h1>
-      <div class="ml-auto pr-9">
+    </div>
+    <div class="pl-8 flex my-4">
+      <div class="flex items-center justify-center">
+           <div>
+              <label class="mr-4 ml-14">เรียงตามช่วงราคา</label>
+              <input type="number" min="0" v-model="priceRange.start" id="start_price" class="rounded-lg shadow w-32 bg-gray-100 border-gray-200 py-2">
+           </div>
+           <p class="mx-4">-</p>
+           <div>
+               <input type="number" min="0" v-model="priceRange.end" id="end_price" class="rounded-lg shadow w-32 bg-gray-100 border-gray-200 py-2">
+           </div>
+           <div class="mx-2 flex inset-y-0 left-0 items-center pl-3 cursor-pointer">
+               <button @click="priceFilter()" class="p-2.5 bg-[#528D58] border shadow rounded-lg">
+                   <svg aria-hidden="true" class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+               </button>
+           </div>
+       </div>
+      <div class="ml-auto pr-20 mr-2">
         <label class="px-3 text-lg">เรียงโดย</label>
         <select v-model="sortOption" class="rounded-lg shadow bg-gray-100 border-gray-200 py-2">
           <option value="default">ล่าสุด</option>
@@ -62,9 +98,30 @@
             products: null,
             error: null,
             sortOption: 'default',
-        }
-    },
-    watch: {
+            priceRange: {
+                 start: null,
+                 end: null
+             }
+         }
+     }, 
+     methods: {
+         async priceFilter() {
+             if (this.priceRange.start == null && this.priceRange.end == null) {
+                 return null
+             } else if (this.priceRange.start == 0 && this.priceRange.end == 0) {
+                 return null
+             } else if (this.priceRange.end < this.priceRange.start) {
+                 return null
+             }
+             await this.product_store.fetch()
+             this.products = this.product_store.sortByLatest
+             this.products = this.products.filter(product => {
+                 return product.price >= this.priceRange.start && product.price <= this.priceRange.end
+             })
+             // TODO: ถ้า filter ได้แล้ว จะทำให้ sortOption กลับไปเป็น default
+         },
+     },
+     watch: {
      sortOption (newOption, oldOption) {
        switch (newOption) {
          case 'minPrice':
