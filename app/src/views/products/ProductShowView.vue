@@ -10,7 +10,7 @@
           บาท
         </div>
         <div class="flex items-center my-4"> ร้านค้า:
-          <a href="" class="font-bold mx-4"> {{ product.shop_id }} </a>
+          <a :href="`/shops/${product.shop_id}`" class="font-bold mx-4"> {{ product.shop_id }} </a>
         </div>
         <div class="my-6 flex">
           <p>หมวดหมู่:</p>
