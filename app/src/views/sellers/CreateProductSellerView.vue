@@ -11,26 +11,6 @@
                     <span class="flex-1 ml-9 whitespace-nowrap">ทั้งหมด</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <span class="flex-1 ml-9 whitespace-nowrap">ที่ต้องจัดส่ง</span>
-                    </a>
-                </li> -->
-                <!-- <li>
-                    <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <span class="flex-1 ml-9 whitespace-nowrap">ระหว่างจัดส่ง</span>
-                    </a>
-                </li> -->
-                <!-- <li>
-                    <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <span class="flex-1 ml-9 whitespace-nowrap">สำเร็จ</span>
-                    </a>
-                </li> -->
-                <!-- <li>
-                    <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <span class="flex-1 ml-9 whitespace-nowrap">การยกเลิกสินค้า</span>
-                    </a>
-                </li> -->
                 <li class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg">
                     <img src="https://cdn-icons-png.flaticon.com/512/4947/4947410.png" class="flex-shrink-0 w-6 h-6 text-gray-500 transition">
                     <span class="flex-1 ml-3 whitespace-nowrap">คลังสินค้า</span>       
@@ -45,16 +25,6 @@
                     <span class="flex-1 ml-9 whitespace-nowrap">สินค้าทั้งหมด</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <span class="flex-1 ml-9 whitespace-nowrap">สินค้าหมด</span>
-                    </a>
-                </li> -->
-                <!-- <li>
-                    <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <span class="flex-1 ml-9 whitespace-nowrap">สินค้าที่ถูกรายงาน</span>
-                    </a>
-                </li> -->
                 <li class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg">
                     <img src="https://cdn-icons-png.flaticon.com/512/3524/3524636.png" class="flex-shrink-0 w-6 h-6 text-gray-500 transition">
                     <span class="flex-1 ml-3 whitespace-nowrap">ตั้งค่าร้านค้า</span>
@@ -69,8 +39,8 @@
         <div class="flex-initial ml-60 w-full lg:max-h-full">
             <div class="font-mono mt-4 mx-20 overflow-x-auto relative">
                 <h1 class="py-8 text-2xl text-center">เพิ่มสินค้า</h1>
-
-                <img src="@/assets/shop.png" v-if="imageData.length == 0" class="mx-auto mb-8" width="200" height="200">
+                <!-- <img src="@/assets/shop.png" class="mx-auto mb-8" width="160" height="160"> -->
+                <img v-if="imageData.length == 0" class="rounded-lg mx-auto my-4" src="@/assets/shop.png" alt="image description" width="200" height="200">
                 <img :src="imageData" v-if="imageData.length > 0" class="mx-auto mb-8 rounded-lg" width="200" height="200">
                 <div class="text-center mb-6">
                     <label class="mt-5 text-sm bg-[#F1F1F1] border border-gray-300 rounded-full shadow cursor-pointer hover:bg-[#e0e0e0] p-2.5" for="file_input">เลือกรูปภาพ</label>
@@ -145,7 +115,8 @@ export default {
             },
             imageData: "",
             product_id: null,
-            img: null
+            img: null,
+            imageData: ''
         }
     },
     methods:{
@@ -196,24 +167,7 @@ export default {
                 // Start the reader job - read file as a data url (base64 format)
                 reader.readAsDataURL(input.files[0]);
             }
-        }//, 
-        // previewImage: function(event) {
-        //     // Reference to the DOM input element
-        //     var input = event.target;
-        //     // Ensure that you have a file before attempting to read it
-        //     if (input.files && input.files[0]) {
-        //         // create a new FileReader to read this image and convert to base64 format
-        //         var reader = new FileReader();
-        //         // Define a callback function to run, when FileReader finishes its job
-        //         reader.onload = (e) => {
-        //             // Note: arrow function used here, so that "this.imageData" refers to the imageData of Vue component
-        //             // Read image as base64 and set to imageData
-        //             this.imageData = e.target.result;
-        //         }
-        //         // Start the reader job - read file as a data url (base64 format)
-        //         reader.readAsDataURL(input.files[0]);
-        //     }
-        // }
+        }
     },components:{
         FilePreviewfrom
     }

@@ -71,7 +71,7 @@ export default {
                 formData.append('description', this.description)
                 formData.append('user_id', this.auth.id)
                 let response = await this.$axios.post('/shops', formData)
-                if (response.status == 200) {
+                if (response.status === 201) {
                     let Data = new FormData()
                     Data.append('image', this.image)
                     Data.append('shop_id', response.data.shop_id)
@@ -81,14 +81,15 @@ export default {
                                 }
                             })
                 }
-                this.goTo('/sellers/products')
-                        
+                this.$router.push({ name: 'SellerShop' })
             } catch (error) {
                 console.log(error)
             }
         },
-        goTo(path) {
-            this.$router.push(path)
+        watch: {
+            $route(to, from) {
+                this.$router.push(from)
+            }
         }
     },
 }
