@@ -32,7 +32,7 @@
           </div>
         </form>
         <div class="justify-between items-center w-full md:flex md:w-auto md:order-1 flex">
-            <img src="../assets/shopping-cart.png" class="mr-10" width="30" height="30">
+            <a href="/baskets"><img src="../assets/shopping-cart.png" class="mr-10" width="30" height="30"></a>
             <div v-if="auth == null" class="">
               <button class="flex items-center mr-2 p-2">
                 <a href="/login" class="text-white text-lg">เข้าสู่ระบบ</a>
