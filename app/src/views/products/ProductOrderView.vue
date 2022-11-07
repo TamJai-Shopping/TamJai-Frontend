@@ -19,7 +19,7 @@
             <div class="mx-20">
                 <div class="w-full my-6">
                     <label for="address">ที่อยู่จัดส่ง</label>
-                    <textarea rows="4" type="text" id="" class="mt-4 border-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required></textarea>
+                    <textarea v-model="order.location" rows="4" type="text" id="" class="mt-4 border-2 border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required></textarea>
                 </div>
             </div>
             <hr class="my-8 mx-10 h-px bg-gray-300 border">
@@ -68,7 +68,7 @@ export default {
         return {
             order: {
                 user_id: '',
-                location: 'aaaa',
+                location: '',
             },
             orderItem: {
                 user_id: '',

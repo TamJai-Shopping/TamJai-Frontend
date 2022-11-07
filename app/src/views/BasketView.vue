@@ -121,6 +121,7 @@ export default {
                 this.basket.user_id = 1
                 this.basket.selectShop = shop_id
                 const id = this.basket_store.getBasketsByUser(1).id
+                this.basket_store.totalPrice(basket)
                 // const response = await this.$axios.put(`/baskets/${id}`, this.basket)
                 console.log(this.basket)
                 const response = await this.basket_store.update(this.basket)
