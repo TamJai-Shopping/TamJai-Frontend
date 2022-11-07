@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import RewardCard from '@/components/rewards/RewardCard.vue'
+    import RewardCard from '@/components/reward/RewardCard.vue'
     export default {
         data() {
             return {
