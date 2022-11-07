@@ -60,7 +60,7 @@
                                     {{ order.user_id }}
                                 </td>
                                 <td class="py-3 px-6">
-                                   
+                                    {{ order.location }}
                                 </td>
                                 <td class="py-3 px-6">
                                     {{ order.total_price }}
