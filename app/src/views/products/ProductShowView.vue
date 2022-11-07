@@ -325,13 +325,13 @@ export default {
       product: null,
       buyAmount: 1,
       new_review: {
-        user_id: this.auth.id, // TODO: แก้ให้เป็น user ที่ login
+        user_id: null, // TODO: แก้ให้เป็น user ที่ login
         detail: null,
         rating: 1,
       },
       report: {
         product_id: 0,
-        user_id: this.auth.id,
+        user_id: null,
         detail: '',
       },
       initBasket: {
@@ -421,7 +421,7 @@ export default {
             const formData = new FormData()
             formData.append('image', this.file_name)
             formData.append('review_id', response.data.review_id)
-            formData.append('user_id', this.auth_store.getAuth.id)
+            formData.append('user_id', this.auth.id)
             try {
               const response = await this.$axios.post("/images", formData)
               if (response.status === 201) {
