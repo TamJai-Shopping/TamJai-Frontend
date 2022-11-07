@@ -13,11 +13,10 @@
                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
             </div>
-
             <input name="search" type="search" id="default-search" v-model="search"
               class="block p-3 pl-12 w-full text-gray-900 bg-gray-50 rounded-xl border border-gray-300 focus:ring-[#B3BA1E] focus:border-blue-500"
               placeholder="ค้นหาสินค้า" required />
-            <router-link to="/products/search" v-on:click="searchProduct">
+              <router-link :to="`/products/search?q=${search}`" v-on:click="searchProduct">
               <button type="submit" v-on:click="searchProduct"
                 class="text-white absolute right-2.5 bottom-1.5  bg-[#B3BA1E] hover:bg-[#aeb347] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl text-sm px-1.5 py-1.5">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -25,18 +24,16 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
-
               </button>
             </router-link>
-
           </div>
         </form>
         <div class="justify-between items-center w-full md:flex md:w-auto md:order-1 flex">
           <!-- <img src="../assets/shopping-cart.png" class="mr-10" width="30" height="30"> -->
           <div>
-            <RouterLink to="/baskets" class="text-white text-2xl font-bold">
+            <a href="/baskets" class="text-white text-2xl font-bold">
               <img src="../assets/shopping-cart.png" class="mr-10" width="30" height="30">
-            </RouterLink>
+            </a>
           </div>
           <div v-if="auth == null" class="">
             <button class="flex items-center mr-2 p-2">
