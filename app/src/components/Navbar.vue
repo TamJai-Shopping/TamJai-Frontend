@@ -119,9 +119,11 @@ export default {
     try {
       await this.product_store.fetch()
       await this.category_store.fetch()
+      await this.auth_store.fetch()
       console.log(this.category_store.categories)
       this.products = this.product_store.sortByLatest
       this.categories = this.category_store.categories
+      this.auth = this.auth_store.getAuth
     } catch (error) {
       this.error = error.message
     }
