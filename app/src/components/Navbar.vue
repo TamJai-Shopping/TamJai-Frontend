@@ -47,7 +47,7 @@
             </button>
             <div class="dropdown-content w-32 rounded-lg">
               <a href="/user/profile/edit" class="rounded-lg">แก้ไขข้อมูลผู้ใช้</a>
-              <a v-if="auth.shop_id == null" href="/seller/products" class="rounded-lg">ร้านค้าของฉัน</a>
+              <a v-if="auth.shop_id != null" href="/seller/products" class="rounded-lg">ร้านค้าของฉัน</a>
               <a v-else href="/shop/create" class="rounded-lg">เปิดร้านค้า</a>
               <a href="/logout" class="rounded-lg">ออกจากระบบ</a>
             </div>

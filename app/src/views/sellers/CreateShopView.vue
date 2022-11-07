@@ -86,11 +86,6 @@ export default {
                 console.log(error)
             }
         },
-        watch: {
-            $route(to, from) {
-                this.$router.push(from)
-            }
-        }
     },
 }
 </script>
