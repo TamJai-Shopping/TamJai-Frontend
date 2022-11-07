@@ -1,6 +1,6 @@
 <template>
     <div v-for="basket in baskets" v-bind:key="baskets.id" class="m-8">
-        <div v-if="basket.id == auth.id">
+        <div v-if="basket.id == 1">
             <div class="flex items-center justify-center">
                 <img src="https://cdn-icons-png.flaticon.com/512/3144/3144456.png" class="mr-6" width="40" height="40">
                 <h1 class="font-mono text-center text-3xl">ตะกร้าสินค้า</h1>
@@ -12,12 +12,13 @@
                     <div v-if="shop.id == basketItem.shop_id" class="flex items-center">
                         <img class="rounded-lg mr-10" src="https://cdn-icons-png.flaticon.com/512/2957/2957307.png"
                             width="100" height="100">
-                        <p class="mx-8">ชื่อสินค้า: {{ searchProductById(basketItem.product_id).name }}</p>
+                        <!-- <p class="mx-8">ชื่อสินค้า: {{ searchProductById(basketItem.product_id).name }}</p> -->
+                        <p class="mx-8">ชื่อสินค้า: {{ basketItem.product_id }}</p>
                         <p class="mx-8">จำนวน: {{ basketItem.quantity }} ชิ้น</p>
                     </div>
                 </div>
                 <div class="mx-10">
-                    <button @click="buyItems(shop.id)"
+                    <button @click="emergencyPush(shop.id)"
                         class="bg-gray-400 block w-full rounded-lg mt-4 py-2 text-white font-semibold mb-2">
                         ซื้อสินค้า
                     </button>
@@ -63,20 +64,21 @@ export default {
             baskets: null,
             products: null,
             shops: null,
-            auth: ''
+            auth: '',
+            productName: ''
 
         }
     },
-    watch: {
-        auth_store: {
-            immediate: true,
-            deep: true,
-            handler(newValue, oldValue) {
-                console.log(newValue.getAuth)
-                this.auth = this.auth_store.getAuth
-            }
-        }
-    },
+    // watch: {
+    //     auth_store: {
+    //         immediate: true,
+    //         deep: true,
+    //         handler(newValue, oldValue) {
+    //             console.log(newValue.getAuth)
+    //             this.auth = this.auth_store.getAuth
+    //         }
+    //     }
+    // },
     methods: {
         async refreshBaskets(data) {
             if (data.refresh) {
@@ -102,13 +104,14 @@ export default {
         },
 
         basketsByShop: function (shop_id) {
+            
             return this.basket_store.getBasketsByShop(shop_id);
         },
         async buyItems(shop_id) {
             try {
                 this.selectShop = shop_id
-                const id = this.basket_store.getBasketsByUser(auth.id).id
-                const response = await this.$axios.put(`/baskets/${id}`)
+                const id = this.basket_store.getBasketsByUser(1).id
+                const response = await this.$axios.put(`/baskets/${id}`, this.basket)
                 if (response.status == 200) {
                     this.basket_id = response.data.basket_id
                     this.$router.push(`${this.basket_id}`)
@@ -122,6 +125,11 @@ export default {
             }
 
         },
+        emergencyPush(shop_id){
+            this.basket.selectShop = shop_id
+            this.basket_store.update(this.basket, this.basket_store.getBasketsByUser(1))
+            this.$router.push(`/baskets/1`)
+        }
 
     },
     async mounted() {
@@ -138,11 +146,12 @@ export default {
             await this.shop_store.fetch()
             this.shops = this.shop_store.getShops
 
-            if (this.auth_store.isAuthen) {
-                this.auth = this.auth_store.getAuth
-            } else {
-                this.auth = null
-            }
+            // if (this.auth_store.isAuthen) {
+            //     this.auth = this.auth_store.getAuth
+            // } else {
+            //     this.auth = null
+            // }
+            console.log(this.basket_store)
         } catch (error) {
             this.error = error.message
         }

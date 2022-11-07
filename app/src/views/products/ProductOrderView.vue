@@ -12,7 +12,7 @@
             </div>
             <div class="flex ml-20 mt-10">
                 <p class="mr-4">ราคารวมทั้งหมด </p>
-                <p></p>
+                <p>{{ basket.total_price }}</p>
                 <p class="ml-4 mr-20">บาท</p>
             </div>
             <hr class="my-8 mx-10 h-px bg-gray-300 border">
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="text-center m-4">
-                <button type="submit" @click="createOrder()" class="m-2 text-center text-white bg-[#528D58] shadow hover:bg-[#aab03c] rounded-lg  w-full sm:w-auto px-6 py-2.5">ยืนยันการสั่งซื้อ</button>
+                <button type="submit" @click="createOrder" class="m-2 text-center text-white bg-[#528D58] shadow hover:bg-[#aab03c] rounded-lg  w-full sm:w-auto px-6 py-2.5">ยืนยันการสั่งซื้อ</button>
             </div>
         </div> 
     </div>
@@ -42,7 +42,7 @@
     <div>
         <p>-----------------------------------------------</p>
         <p>test: {{basket}}</p>
-        <p>Key: {{key}}</p>
+        <p>order: {{order}}</p>
         <button @click="getTotalPrice()">คำนวนราคา</button>
     </div>
     
@@ -66,11 +66,11 @@ export default {
     data() {
         return {
             order: {
-                id: '',
-                status: '',
-                total_price: '',
-                package_number: '',
-
+                user_id: '',
+                location: 'aaaa',
+            },
+            orderItem: {
+                user_id: '',
             },
             title: "Basket List",
             basket: null,
@@ -78,9 +78,6 @@ export default {
             key: ''
 
         }
-    },
-    computed: {
-
     },
     watch: {},
     methods: {
@@ -125,10 +122,13 @@ export default {
             // this.basket_store.totalPrice()
         },
         createOrder(){
-            this.basket_store.createOrder()
-            this.basket_store.createOrderItem()
+            this.order.user_id = 1
+            this.orderItem.user_id = 1
+            this.basket_store.createOrder(this.$order)
+            this.basket_store.createOrderItem(this.$orderItem)
             // this.basket_store.delete()
             // this.basketItem_store.delete()
+            this.$router.push(`/`)
         }
 
     },
