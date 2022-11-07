@@ -403,6 +403,7 @@ export default {
         this.error = error.message
         console.error(error)
       }
+      this.$router.push(`/baskets`)
     },
     async postNewReview(product_id) {
       this.error = null

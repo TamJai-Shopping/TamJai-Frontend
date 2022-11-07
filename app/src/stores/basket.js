@@ -54,11 +54,11 @@ export const useBasketStore = defineStore({
     async totalPrice(user) {
     this.totalPrice = await basketAPI.totalPrice(user)
     },
-    async createOrder(){
-      await basketAPI.createOrder()
+    async createOrder(user){
+      await basketAPI.createOrder(user)
     },
-    async createOrderItem(){
-      await basketAPI.createOrderItem()
+    async createOrderItem(user){
+      await basketAPI.createOrderItem(user)
     },
     async initBasket (user) {
       const response = await basketAPI.initBasket(user)

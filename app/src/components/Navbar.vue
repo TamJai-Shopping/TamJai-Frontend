@@ -32,7 +32,12 @@
           </div>
         </form>
         <div class="justify-between items-center w-full md:flex md:w-auto md:order-1 flex">
-          <img src="../assets/shopping-cart.png" class="mr-10" width="30" height="30">
+          <!-- <img src="../assets/shopping-cart.png" class="mr-10" width="30" height="30"> -->
+          <div>
+            <button @click="pushToBasketView">
+              <img src="../assets/shopping-cart.png" class="mr-10" width="30" height="30">
+            </button>
+          </div>
           <div class="bg-white rounded-xl">
             <a class="container flex flex-wrap justify-between items-center">
               <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class = "ml-3" style="height: 30px; width: 30px; ">
@@ -91,6 +96,9 @@ export default {
        this.$router.push({name: 'products.search', query: {q: this.search}});
 
 
+    },
+    pushToBasketView(){
+      this.$router.push('/baskets')
     }
   },
 }

@@ -119,16 +119,16 @@ export const basketAPI = {
     }
     return []
   },
-  async createOrder (){
-    const response = await axiosInstance.post('/baskets/createOrder')
+  async createOrder (user){
+    const response = await axiosInstance.post('/baskets/createOrder', user)
 
     if (response.status == 200) {
       return response.data
     }
     return []
   },
-  async createOrderItem (){
-    const response = await axiosInstance.post('/baskets/createOrderItem')
+  async createOrderItem (user){
+    const response = await axiosInstance.post('/baskets/createOrderItem',user)
 
     if (response.status == 200) {
       return response.data
