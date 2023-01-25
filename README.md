@@ -1,63 +1,57 @@
-# vue3-docker-starter
+# vue3-docker
 
-> docker-compose, vite, vue3, vue-router, pinia, tailwindcss, flowbite
+## แนะนำโปรเจค
+ ระบบ Tam jai (ตาม-ใจ) เป็นโปรเจคเว็บไซต์สำหรับซื้อขายสินค้า โดยในหน้าเว็บจะมีสินค้าหลายหมวดหมู่ที่วางขายอยู่ ผู้ใช้สามารถกดเลือกซื้อสินค้า หรือเปิดร้านค้าเพื่อขายในเว็บไซต์นี้ได้
 
-## Development
+## ชื่อกลุ่ม และรายชื่อสมาชิกในกลุ่ม
+ 
+### กลุ่ม Tam-Jai (ทำใจ)
+- รหัสนิสิต-ชื่อนามสกุล 6310450051 ลีโอณิช เช็ง 
+GitHub: KenzieLeonic 
+- รหัสนิสิต-ชื่อนามสกุล 6310450484 ณภัทร พัชโรภาสวงศ์ 
+GitHub: aungpor 
+- รหัสนิสิต-ชื่อนามสกุล 6310450522 ธนบดี กังวลกิจ 
+GitHub: nax200 
+- รหัสนิสิต-ชื่อนามสกุล 6310450620 พุธิตา จองศิริกุล 
+GitHub: ployputita 
+- รหัสนิสิต-ชื่อนามสกุล 6310451120 ณัฐพงษ์ เหล่าเราวัฒนกุล 
+GitHub: S-Nattapong 
+- รหัสนิสิต-ชื่อนามสกุล 630451294 พชร สุวราวรนาถ 
+GitHub: Irisia
 
+## คำแนะนำในการติดตั้งโปรเจค
+> require: ต้องติดตั้ง docker และเปิดใช้งานอยู่
+1. change directory ไปที่ ๆ ต้องการติดตั้ง
+2. ใช้คำสั่งในการโหลดโปรเจค
+```url
+git clone https://github.com/TamJai-Shopping/TamJai-Frontend.git
+```
+3. รันคำสั่งเหล่านี้ตามลำดับ
 ```bash
 docker-compose up -d
 docker-compose exec app npm install
 docker-compose exec app npm run dev
 ```
 
-Access to localhost at port 3000 [http://localhost:3000](http://localhost:3000)
+## คำแนะนำในการติดตั้งโปรเจคสำหรับ deploy
 
-Hooking into the container
 
-```bash
-docker-compose exec app /bin/bash
-```
 
-## Using `npm` command from host
+## คำแนะนำในการรันโปรเจคหรือการเข้าถึงหน้าเว็บไซต์
+> require: ต้องรันโปรเจคที่ back-end ก่อนเพื่อให้สามารถเข้าถึง api ได้ <br>
+เข้าผ่าน url [http://localhost:3000](http://localhost:3000)
 
-```bash
-docker-compose exec app npm ...
-# For example:
-docker-compose exec app npm install -g npm@8.18.0
-```
 
-## Setting up the Project for Docker
 
-If you want to change default port (3000), the port must be set to match the one in the `docker-compose.yml` file.
+## default username และ password สำหรับผู้ใช้แต่ละ role
 
-Open the `vite.config.js` file and change the server object with the port field to the configuration:
+- Role user
+- Email: user01@api.example.com
+- Password: userpass
+-----------------------------------
+- Role Admin
+- Email: admin@api.example.com
+- Password: adminpass
 
-```js
-import { fileURLToPath, URL } from 'url'
-
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  server: {     
-    port: 3000    // <-- change port
-  },
-  plugins: [vue()],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
-})
-```
-
-## Tailwind Cheat Sheet
-* No 1: [NerdCave](https://nerdcave.com/tailwind-cheat-sheet)
-* No 2: [LeCoupa](https://github.com/LeCoupa/awesome-cheatsheets/blob/master/frontend/tailwind.css)
-* No 3: [umeshmk](https://umeshmk.github.io/Tailwindcss-cheatsheet/)
-
-## VS Code Tailwind Extension
-
-* [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
-* [Headwind](https://marketplace.visualstudio.com/items?itemName=heybourn.headwind)
+## ระบุ release tag ของโปรเจคที่สมบูรณ์ ใช้ในการนำเสนอ
+> v1.0.0
